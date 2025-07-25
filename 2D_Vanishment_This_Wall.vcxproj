@@ -171,9 +171,6 @@
     <ClCompile Include="title_menu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="2D_Vanishment_This_Wall.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="data\TEXTURE\VTW.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
