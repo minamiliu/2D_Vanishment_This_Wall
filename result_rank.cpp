@@ -1,14 +1,14 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ƒŠƒUƒ‹ƒg‚Ì‹¦—Íƒ‚[ƒh‚Ìƒ‰ƒ“ƒLƒ“ƒO•\¦ˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	result_rank.cpp
-// ì¬Ò:			HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		ãƒªã‚¶ãƒ«ãƒˆã®å”åŠ›ãƒ¢ãƒ¼ãƒ‰ã®ãƒ©ãƒ³ã‚­ãƒ³ã‚°è¡¨ç¤ºå‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	result_rank.cpp
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include <stdio.h>
@@ -18,30 +18,30 @@
 #include "score.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
-#define POLYGON_SIZE_X	(100)//ƒ|ƒŠƒSƒ“‚ÌSIZE X
-#define POLYGON_SIZE_Y	(100)//ƒ|ƒŠƒSƒ“‚ÌSIZE Y
-#define POLYGON_POS_X	(50 + POLYGON_SIZE_X/2)//ƒ|ƒŠƒSƒ“‚Ì¶ãX
-#define POLYGON_POS_Y	(180 + POLYGON_SIZE_Y/2)//ƒ|ƒŠƒSƒ“‚Ì¶ãY
+#define POLYGON_SIZE_X	(100)//ãƒãƒªã‚´ãƒ³ã®SIZE X
+#define POLYGON_SIZE_Y	(100)//ãƒãƒªã‚´ãƒ³ã®SIZE Y
+#define POLYGON_POS_X	(50 + POLYGON_SIZE_X/2)//ãƒãƒªã‚´ãƒ³ã®å·¦ä¸ŠX
+#define POLYGON_POS_Y	(180 + POLYGON_SIZE_Y/2)//ãƒãƒªã‚´ãƒ³ã®å·¦ä¸ŠY
 
 #define POLYGON_TEXTURENAME "data/TEXTURE/RESULT/CROWN2.png"
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 void ScoreFileReadWrite(void);
 void BubbleSort(int data[], int size);
 HRESULT MakeVertexResultPlayer(LPDIRECT3DDEVICE9 pDevice);
 void SetVertexResultRank(int nRankIdx);
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferResultPlayer = NULL;
@@ -52,18 +52,18 @@ RESULT_RANK_PLAYER g_resultPlayer[MAX_RANK];
 int rank[MAX_RANK];
 int g_playerRank;
 
-const int key = 0x45bf6c7d; //”CˆÓ‚ÌˆÃ†‰»ƒL[
+const int key = 0x45bf6c7d; //ä»»æ„ã®æš—å·åŒ–ã‚­ãƒ¼
 float g_angle2;
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ì‰Šú‰»ˆ—
+é–¢æ•°å:	HRESULT InitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜:	èƒŒæ™¯ã®åˆæœŸåŒ–å‡¦ç†
 *******************************************************************************/
 HRESULT InitResultRank(void)
 {
-	//ŠO•”ŠÖ”‚Ì‰Šú‰»
+	//å¤–éƒ¨é–¢æ•°ã®åˆæœŸåŒ–
 	InitResultRankNth();
 	InitResultRankTex();
 
@@ -78,8 +78,8 @@ HRESULT InitResultRank(void)
 	}
 	for(int nCntRank = 0; nCntRank < MAX_RANK/2; nCntRank++)
 	{
-		g_resultPlayer[nCntRank].pos = D3DXVECTOR3( POLYGON_POS_X, POLYGON_POS_Y + nCntRank*110, 0.0f);  //¶5
-		g_resultPlayer[nCntRank + MAX_RANK/2].pos = D3DXVECTOR3( POLYGON_POS_X + 550, POLYGON_POS_Y + nCntRank*110, 0.0f); //‰E5
+		g_resultPlayer[nCntRank].pos = D3DXVECTOR3( POLYGON_POS_X, POLYGON_POS_Y + nCntRank*110, 0.0f);  //å·¦5
+		g_resultPlayer[nCntRank + MAX_RANK/2].pos = D3DXVECTOR3( POLYGON_POS_X + 550, POLYGON_POS_Y + nCntRank*110, 0.0f); //å³5
 
 		//switch(nCntRank)
 		//{
@@ -102,22 +102,22 @@ HRESULT InitResultRank(void)
 	}
 	g_resultPlayer[MAX_RANK-1].pos = D3DXVECTOR3( -1000, -1000 , 0.0f);
 
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	g_angle2 = 0;
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexResultPlayer(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME, &g_pTextureResultPlayer);
 
-	//SCORE FILE ˆ—
+	//SCORE FILE å‡¦ç†
 	ScoreFileReadWrite();
 
-	//rank‚Ì•\¦
+	//rankã®è¡¨ç¤º
 	for(int nCnt = 0; nCnt < MAX_RANK; nCnt++)
 	{
 		if(nCnt == g_playerRank)
@@ -131,37 +131,37 @@ HRESULT InitResultRank(void)
 	return S_OK;
 }
 /*******************************************************************************
-ŠÖ”–¼:	void DrawBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+é–¢æ•°å:	void DrawBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®æç”»é–¢æ•°
 *******************************************************************************/
 void DrawResultRank(void)
 {
-	//ŠO•”ŠÖ”‚ÌŒÄ‚Ño‚·
+	//å¤–éƒ¨é–¢æ•°ã®å‘¼ã³å‡ºã™
 	DrawResultRankTex();
 	DrawResultRankNth();
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ğƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferResultPlayer, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, g_pTextureResultPlayer);
 
 	for(int nCntRank = 0; nCntRank < MAX_RANK; nCntRank++)
 	{
 		if(g_resultPlayer[nCntRank].bUse)
 		{
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//ãƒãƒªã‚´ãƒ³ã®æç”»
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-				nCntRank*NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+				nCntRank*NUM_VERTEX,	//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);
 		}
 	}
@@ -169,14 +169,14 @@ void DrawResultRank(void)
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	void UninitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+é–¢æ•°å:	void UninitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é–‹æ”¾é–¢æ•°
 *******************************************************************************/
 void UninitResultRank(void)
 {
-	//ŠO•”ŠÖ”‚ÌŒÄ‚Ño‚·
+	//å¤–éƒ¨é–¢æ•°ã®å‘¼ã³å‡ºã™
 	UninitResultRankTex();
 	UninitResultRankNth();
 
@@ -194,7 +194,7 @@ void UninitResultRank(void)
 
 void UpdateResultRank()
 {
-	//ŠO•”ŠÖ”‚ÌŒÄ‚Ño‚·
+	//å¤–éƒ¨é–¢æ•°ã®å‘¼ã³å‡ºã™
 	UpdateResultRankTex();
 	UpdateResultRankNth();
 
@@ -218,25 +218,25 @@ void UpdateResultRank()
 HRESULT MakeVertexResultPlayer(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_RANK,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_RANK,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferResultPlayer,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferResultPlayer,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferResultPlayer->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntRank = 0; nCntRank < MAX_RANK; nCntRank++, pVtx += NUM_VERTEX)
 	{
-		//’¸“_À•W‚Ìİ’è
+		//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_resultPlayer[nCntRank].pos.x - (POLYGON_SIZE_X/2), g_resultPlayer[nCntRank].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_resultPlayer[nCntRank].pos.x + (POLYGON_SIZE_X/2), g_resultPlayer[nCntRank].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_resultPlayer[nCntRank].pos.x - (POLYGON_SIZE_X/2), g_resultPlayer[nCntRank].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
@@ -256,7 +256,7 @@ HRESULT MakeVertexResultPlayer(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = g_resultPlayer[nCntRank].col;
 		pVtx[3].col = g_resultPlayer[nCntRank].col;
 
-		//ƒeƒNƒXƒ`ƒƒÀ•Ww’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 		pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 		pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
@@ -275,21 +275,21 @@ HRESULT MakeVertexResultPlayer(LPDIRECT3DDEVICE9 pDevice)
 void SetVertexResultRank(int nRankIdx)
 {
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferResultPlayer->Lock( 0, 0, (void**)&pVtx, 0);
 
 	pVtx += nRankIdx * NUM_VERTEX; 
 
-	//’¸“_À•W‚Ìİ’è
+	//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 	pVtx[0].pos = D3DXVECTOR3(g_resultPlayer[nRankIdx].pos.x - (g_resultPlayer[nRankIdx].size.x/2), g_resultPlayer[nRankIdx].pos.y - (g_resultPlayer[nRankIdx].size.y/2), 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(g_resultPlayer[nRankIdx].pos.x + (g_resultPlayer[nRankIdx].size.x/2), g_resultPlayer[nRankIdx].pos.y - (g_resultPlayer[nRankIdx].size.y/2), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(g_resultPlayer[nRankIdx].pos.x - (g_resultPlayer[nRankIdx].size.x/2), g_resultPlayer[nRankIdx].pos.y + (g_resultPlayer[nRankIdx].size.y/2), 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(g_resultPlayer[nRankIdx].pos.x + (g_resultPlayer[nRankIdx].size.x/2), g_resultPlayer[nRankIdx].pos.y + (g_resultPlayer[nRankIdx].size.y/2), 0.0f);
 
-	// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pVtxBufferResultPlayer->Unlock();
 }
 
@@ -314,10 +314,10 @@ void ScoreFileReadWrite(void)
 {
 	FILE *pRank;
 
-	//ƒtƒ@ƒCƒ‹‚Ì“Ç‚İ‚İ
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã®èª­ã¿è¾¼ã¿
 	pRank = fopen( "data/FILE/ranking.bin","rb" );
 
-	if(pRank == NULL) //ƒGƒ‰[
+	if(pRank == NULL) //ã‚¨ãƒ©ãƒ¼
 	{
 		pRank = fopen( "data/FILE/ranking.bin","wb" );
 		for(int nCnt = 0; nCnt < MAX_RANK; nCnt++)
@@ -325,10 +325,10 @@ void ScoreFileReadWrite(void)
 			rank[nCnt] = 0;
 		}	
 	}
-	else //³í
+	else //æ­£å¸¸
 	{
 		fread(rank,sizeof(int),MAX_RANK,pRank);
-		//•œ†
+		//å¾©å·
 		for(int nCnt = 0; nCnt < MAX_RANK; nCnt++)
 		{
 			rank[nCnt] ^= key;
@@ -337,13 +337,13 @@ void ScoreFileReadWrite(void)
 	fclose(pRank);
 
 
-	//¡‰ñ‚Ì“_”
+	//ä»Šå›ã®ç‚¹æ•°
 	rank[MAX_RANK-1] = GetScore()->score;
 	
-	//ƒ\[ƒg‚·‚é
+	//ã‚½ãƒ¼ãƒˆã™ã‚‹
 	BubbleSort(rank,MAX_RANK);
 	
-	//ƒvƒŒƒ„[‚Ì“_”‚ğw‚·
+	//ãƒ—ãƒ¬ãƒ¤ãƒ¼ã®ç‚¹æ•°ã‚’æŒ‡ã™
 	for(int nCnt = MAX_RANK-1; nCnt >= 0; nCnt--)
 	{
 		if(GetScore()->score == rank[nCnt])
@@ -354,16 +354,16 @@ void ScoreFileReadWrite(void)
 	}
 	GetScore()->score = 0;
 
-	//ˆÃ†‰»
+	//æš—å·åŒ–
 	for(int nCnt = 0; nCnt < MAX_RANK; nCnt++)
 	{
 		rank[nCnt] ^= key;
 	}
-	//ƒtƒ@ƒCƒ‹‚Ì‘‚«‚İ
+	//ãƒ•ã‚¡ã‚¤ãƒ«ã®æ›¸ãè¾¼ã¿
 	pRank = fopen( "data/FILE/ranking.bin","wb" );
 	fwrite(rank,sizeof(int),MAX_RANK,pRank);
 	fclose(pRank);
-	//ˆÃ†‰»
+	//æš—å·åŒ–
 	for(int nCnt = 0; nCnt < MAX_RANK; nCnt++)
 	{
 		rank[nCnt] ^= key;

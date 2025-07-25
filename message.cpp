@@ -1,21 +1,21 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ƒƒbƒZ[ƒW•\Ž¦ˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	message.cpp
-// ì¬ŽÒ:			HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤ºå‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	message.cpp
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "message.h"
 
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
@@ -39,17 +39,17 @@
 #define POLYGON_TEXTURENAME_MSG_12		"data/TEXTURE/MSG/RESULT.png"
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexMessage(LPDIRECT3DDEVICE9 pDevice);
 void SetColorMessage(int nMenuIdx, int R, int G, int B, int A);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferMessage = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureMessage[MAX_MSG] = {NULL};
@@ -58,10 +58,10 @@ MESSAGE	g_msg[MAX_MSG];
 
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ì‰Šú‰»ˆ—
+é–¢æ•°å:	HRESULT InitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	èƒŒæ™¯ã®åˆæœŸåŒ–å‡¦ç†
 *******************************************************************************/
 HRESULT InitMessage(void)
 {
@@ -139,13 +139,13 @@ HRESULT InitMessage(void)
 	//g_msg[12].col = D3DCOLOR_RGBA(255,0,0,255);
 	g_msg[12].col = D3DCOLOR_RGBA(30,225,180,255);
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexMessage(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_MSG_0, &g_pTextureMessage[0]);
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_MSG_1, &g_pTextureMessage[1]);
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_MSG_2, &g_pTextureMessage[2]);
@@ -163,34 +163,34 @@ HRESULT InitMessage(void)
 	return S_OK;
 }
 /*******************************************************************************
-ŠÖ”–¼:	void DrawBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+é–¢æ•°å:	void DrawBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®æç”»é–¢æ•°
 *******************************************************************************/
 void DrawMessage(void)
 {
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferMessage, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	for(int nCntMsg = 0; nCntMsg < MAX_MSG; nCntMsg++)
 	{
 		if(g_msg[nCntMsg].bUse)
 		{
-			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 			pDevice->SetTexture(0, g_pTextureMessage[nCntMsg]);
 
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//ãƒãƒªã‚´ãƒ³ã®æç”»
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-				nCntMsg*4,			//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+				nCntMsg*4,			//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);		
 		}
 	}
@@ -198,10 +198,10 @@ void DrawMessage(void)
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	void UninitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+é–¢æ•°å:	void UninitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é–‹æ”¾é–¢æ•°
 *******************************************************************************/
 void UninitMessage(void)
 {
@@ -223,34 +223,34 @@ void UninitMessage(void)
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexMessage(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_MSG,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_MSG,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferMessage,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferMessage,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferMessage->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntMsg = 0; nCntMsg < MAX_MSG; nCntMsg++,pVtx+=4)
 	{
 
-		//’¸“_À•W‚ÌÝ’è
+		//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_msg[nCntMsg].pos.x - (g_msg[nCntMsg].size.x/2), g_msg[nCntMsg].pos.y - (g_msg[nCntMsg].size.y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_msg[nCntMsg].pos.x + (g_msg[nCntMsg].size.x/2), g_msg[nCntMsg].pos.y - (g_msg[nCntMsg].size.y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_msg[nCntMsg].pos.x - (g_msg[nCntMsg].size.x/2), g_msg[nCntMsg].pos.y + (g_msg[nCntMsg].size.y/2), 0.0f);
@@ -270,7 +270,7 @@ HRESULT MakeVertexMessage(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = g_msg[nCntMsg].col;
 		pVtx[3].col = g_msg[nCntMsg].col;
 
-		//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 		pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 		pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
@@ -291,10 +291,10 @@ void UpdateMessage(void)
 
 void SetColorMessage(int nMenuIdx, int R, int G, int B, int A)
 {
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferMessage->Lock(0, 0, (void**)&pVtx, 0);
 
 	pVtx += nMenuIdx * NUM_VERTEX; 
@@ -305,7 +305,7 @@ void SetColorMessage(int nMenuIdx, int R, int G, int B, int A)
 	pVtx[2].col = D3DCOLOR_RGBA(R,G,B,A);
 	pVtx[3].col = D3DCOLOR_RGBA(R,G,B,A);
 
-	// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pVtxBufferMessage->Unlock();
 	
 }

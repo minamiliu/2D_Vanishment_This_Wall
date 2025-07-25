@@ -1,14 +1,14 @@
 //******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ƒvƒŒƒCƒ„[ˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	player.cpp
-// ì¬Ò:			HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+// ¥¿¥¤¥È¥ë:		¥×¥ì¥¤¥ä¡¼½èÍı
+// ¥×¥í¥°¥é¥àÌ¾:	player.cpp
+// ºîÀ®¼Ô:			HALÅìµş¥²¡¼¥à³Ø²Ê¡¡Î­Æî¹¨
 //
 //******************************************************************************
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ¥¤¥ó¥¯¥ë¡¼¥É¥Õ¥¡¥¤¥ë
 *******************************************************************************/
 
 #include "player.h"
@@ -27,60 +27,60 @@
 #include "num_win.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ¥Ş¥¯¥íÄêµÁ
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define	POLYGON_DOTPOS_X			(1)								// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚wÀ•W)
-#define	POLYGON_DOTPOS_Y			(11)							// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚xÀ•W)
-#define	POLYGON_SIZE_X				(50)							// ƒ|ƒŠƒSƒ“‚Ì•
-#define	POLYGON_SIZE_Y				(50)							// ƒ|ƒŠƒSƒ“‚Ì‚‚³
+#define	POLYGON_DOTPOS_X			(1)								// ¥İ¥ê¥´¥ó¤Î´ğ½à°ÌÃÖ(£ØºÂÉ¸)
+#define	POLYGON_DOTPOS_Y			(11)							// ¥İ¥ê¥´¥ó¤Î´ğ½à°ÌÃÖ(£ÙºÂÉ¸)
+#define	POLYGON_SIZE_X				(50)							// ¥İ¥ê¥´¥ó¤ÎÉı
+#define	POLYGON_SIZE_Y				(50)							// ¥İ¥ê¥´¥ó¤Î¹â¤µ
 
-#define	TEX_PATTERN_DIVIDE_X		(3)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(4)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(3)								// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¥Ñ¥¿¡¼¥ó¤Î¥Æ¥¯¥¹¥Á¥ãÆâ¤Ç¤ÎÊ¬³ä¿ô(£ØÊı¸ş)
+#define	TEX_PATTERN_DIVIDE_Y		(4)								// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¥Ñ¥¿¡¼¥ó¤Î¥Æ¥¯¥¹¥Á¥ãÆâ¤Ç¤ÎÊ¬³ä¿ô(£ÙÊı¸ş)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// £±¥Ñ¥¿¡¼¥ó¤Î¥Æ¥¯¥¹¥Á¥ã¥µ¥¤¥º(£ØÊı¸ş)(1.0f/XÊı¸şÊ¬³ä¿ô)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// £±¥Ñ¥¿¡¼¥ó¤Î¥Æ¥¯¥¹¥Á¥ã¥µ¥¤¥º(£ÙÊı¸ş)(1.0f/YÊı¸şÊ¬³ä¿ô)
 
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-#define	TIME_CHANGE_PATTERN			(10)							// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¤Î¥Ñ¥¿¡¼¥ó¿ô(XÊı¸şÊ¬³ä¿ô¡ßYÊı¸şÊ¬³ä¿ô)
+#define	TIME_CHANGE_PATTERN			(10)							// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¤ÎÀÚ¤êÂØ¤ï¤ë¥¿¥¤¥ß¥ó¥°(¥Õ¥ì¡¼¥à¿ô)
 
-#define	VALUE_MOVE					(3.0f)							// ƒ|ƒŠƒSƒ“‚ÌˆÚ“®—Ê
+#define	VALUE_MOVE					(3.0f)							// ¥İ¥ê¥´¥ó¤Î°ÜÆ°ÎÌ
 #define BOMB_POWER					(2)
 #define BOMB_NUM					(1)
 
-#define	TEXTURE_PLAYER0		"data/TEXTURE/PLAYER/player00.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_PLAYER1		"data/TEXTURE/PLAYER/player01.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_PLAYER2		"data/TEXTURE/PLAYER/player02.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_PLAYER3		"data/TEXTURE/PLAYER/player03.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_PLAYER4		"data/TEXTURE/PLAYER/player04.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_PLAYER5		"data/TEXTURE/PLAYER/player05.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_PLAYER6		"data/TEXTURE/PLAYER/player06.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	TEXTURE_PLAYER7		"data/TEXTURE/PLAYER/player07.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
+#define	TEXTURE_PLAYER0		"data/TEXTURE/PLAYER/player00.png"// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
+#define	TEXTURE_PLAYER1		"data/TEXTURE/PLAYER/player01.png"// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
+#define	TEXTURE_PLAYER2		"data/TEXTURE/PLAYER/player02.png"// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
+#define	TEXTURE_PLAYER3		"data/TEXTURE/PLAYER/player03.png"// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
+#define	TEXTURE_PLAYER4		"data/TEXTURE/PLAYER/player04.png"// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
+#define	TEXTURE_PLAYER5		"data/TEXTURE/PLAYER/player05.png"// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
+#define	TEXTURE_PLAYER6		"data/TEXTURE/PLAYER/player06.png"// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
+#define	TEXTURE_PLAYER7		"data/TEXTURE/PLAYER/player07.png"// ÆÉ¤ß¹ş¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* ¹½Â¤ÂÎÄêµÁ
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ¥×¥í¥È¥¿¥¤¥×Àë¸À
 *******************************************************************************/
 bool CollisionCheckPlayerBullet(int nCntPlayer);
 bool CollisionCheckPlayerEnemy(int nCntPlayer);
 bool CollisionCheckPlayerBoss(int nCntPlayer);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ¥°¥í¡¼¥Ğ¥ëÊÑ¿ô
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferPlayer = NULL;
 LPDIRECT3DTEXTURE9 g_pTexturePlayer[MAX_PLAYER] = {NULL};
 
-PLAYER			g_player[MAX_PLAYER]; //ƒvƒŒƒCƒ„[‚Ìƒ[ƒN
+PLAYER			g_player[MAX_PLAYER]; //¥×¥ì¥¤¥ä¡¼¤Î¥ï¡¼¥¯
 
 //Player controller setting
 int keyOfPlayer[MAX_PLAYER][5] = { 
-	{DIK_DOWN, DIK_LEFT, DIK_RIGHT, DIK_UP, DIK_RETURN}, //1p ‰º ¶ ‰E ã attack
+	{DIK_DOWN, DIK_LEFT, DIK_RIGHT, DIK_UP, DIK_RETURN}, //1p ²¼ º¸ ±¦ ¾å attack
 	{DIK_S, DIK_A, DIK_D, DIK_W, DIK_TAB},  //2p
 	{DIK_J, DIK_H, DIK_K, DIK_U, DIK_SPACE}, //3p
 	{DIK_NUMPAD5, DIK_NUMPAD4, DIK_NUMPAD6, DIK_NUMPAD8, DIK_NUMPAD0}}; //4p
@@ -88,10 +88,10 @@ int keyOfPlayer[MAX_PLAYER][5] = {
 LPCSTR textureName[8] = {TEXTURE_PLAYER0,TEXTURE_PLAYER1,TEXTURE_PLAYER2,TEXTURE_PLAYER3,TEXTURE_PLAYER4,TEXTURE_PLAYER5,TEXTURE_PLAYER6,TEXTURE_PLAYER7};
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	‰Šú‰»ˆ—
+´Ø¿ôÌ¾:	HRESULT InitPolygon(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	HRESUL : ½é´ü²½·ë²Ì Àµ¾ï½ªÎ»:S_OK
+ÀâÌÀ:	½é´ü²½½èÍı
 *******************************************************************************/
 HRESULT InitPlayer()
 {
@@ -124,7 +124,7 @@ HRESULT InitPlayer()
 
 			SetPlayer(nCntPlayer, g_player[nCntPlayer].dotPos);
 
-			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ            ƒtƒ@ƒCƒ‹‚Ì–¼‘O        “Ç‚İ‚Şƒƒ‚ƒŠ[
+			// ¥Æ¥¯¥¹¥Á¥ã¤ÎÆÉ¤ß¹ş¤ß            ¥Õ¥¡¥¤¥ë¤ÎÌ¾Á°        ÆÉ¤ß¹ş¤à¥á¥â¥ê¡¼
 			D3DXCreateTextureFromFile(pDevice, textureName[ pCharaList[nCntPlayer] ], &g_pTexturePlayer[nCntPlayer]);
 
 			switch(pCharaList[nCntPlayer])
@@ -151,14 +151,14 @@ HRESULT InitPlayer()
 					break;
 			}
 
-			//life‚Ì•\¦‚ğ‰Šú‰»A‚»‚¤‚µ‚È‚¢‚ÆŠFƒ[ƒ‚ğ•\¦‚·‚é
+			//life¤ÎÉ½¼¨¤ò½é´ü²½¡¢¤½¤¦¤·¤Ê¤¤¤È³§¥¼¥í¤òÉ½¼¨¤¹¤ë
 			ChangePlayerLife(nCntPlayer, 0);
 		}
 
 
 	}
 
-	//’¸“_î•ñ‚Ìì¬
+	//ÄºÅÀ¾ğÊó¤ÎºîÀ®
 	if(FAILED(MakeVertexPlayer(pDevice)))
 	{
 		return E_FAIL;
@@ -172,7 +172,7 @@ HRESULT SetPlayer(int nPlayerIdx, D3DXVECTOR3 dotPos)
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//player‚Ì‰Šú‰»
+	//player¤Î½é´ü²½
 	//g_player[nPlayerIdx].dotPos = dotPos;
 	g_player[nPlayerIdx].pos = DotPos2Pos(dotPos);
 	g_player[nPlayerIdx].rot = D3DXVECTOR3( 0.0f, 0.0f, 0.0f);
@@ -214,34 +214,34 @@ HRESULT SetPlayer(int nPlayerIdx, D3DXVECTOR3 dotPos)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void DrawPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+´Ø¿ôÌ¾:	void DrawPolygon(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	¥İ¥ê¥´¥ó¤ÎÉÁ²è´Ø¿ô
 *******************************************************************************/
 void DrawPlayer(void)
 {
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ğƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤ò¥Ç¥Ğ¥¤¥¹¤Î¥Ç¡¼¥¿¥¹¥È¥ê¡¼¥à¤Ë¥Ğ¥¤¥ó¥É
 	pDevice->SetStreamSource(0, g_pVtxBufferPlayer, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+	//ÄºÅÀ¥Õ¥©¡¼¥Ş¥Ã¥È¤ÎÀßÄê
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	for(int nCntPlayer = 0; nCntPlayer < MAX_PLAYER; nCntPlayer++)
 	{
 		if(g_player[nCntPlayer].bUse)
 		{
-			//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+			//¥Æ¥¯¥¹¥Á¥ã¤ÎÀßÄê
 			pDevice->SetTexture(0, g_pTexturePlayer[nCntPlayer]);
 
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//¥İ¥ê¥´¥ó¤ÎÉÁ²è
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-				nCntPlayer*NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//¥×¥ê¥ß¥Æ¥£¥Ö¤Î¼ïÎà
+				nCntPlayer*NUM_VERTEX,	//¥í¡¼¥É¤¹¤ëºÇ½é¤ÎÄºÅÀ¥¤¥ó¥Ç¥Ã¥¯¥¹
+				NUM_POLYGON				//¥İ¥ê¥´¥ó¤Î¿ô
 			);			
 		}
 
@@ -249,10 +249,10 @@ void DrawPlayer(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void UninitPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+´Ø¿ôÌ¾:	void UninitPolygon(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	¥İ¥ê¥´¥ó¤Î³«Êü´Ø¿ô
 *******************************************************************************/
 void UninitPlayer(void)
 {
@@ -273,29 +273,29 @@ void UninitPlayer(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+´Ø¿ôÌ¾:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
+°ú¿ô:	LPDIRECT3DDEVICE9 pDevice : Device¥ª¥Ö¥¸¥§¥¯¥È
+Ìá¤êÃÍ:	HRESUL : ½é´ü²½·ë²Ì Àµ¾ï½ªÎ»:S_OK
+ÀâÌÀ:	¥İ¥ê¥´¥ó¤ÎÄºÅÀ¾ğÊó¤ÎºîÀ®´Ø¿ô
 *******************************************************************************/
 HRESULT MakeVertexPlayer(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_PLAYER,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_PLAYER,	//ÄºÅÀ¥Ç¡¼¥¿¤Î¥Ğ¥Ã¥Õ¥¡¥µ¥¤¥º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//ÄºÅÀ¥Õ¥©¡¼¥Ş¥Ã¥È
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferPlayer,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferPlayer,			//ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¥¤¥ó¥¿¡¼¥Õ¥§¡¼¥¹¤Î¥İ¥¤¥ó¥¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤ÎÃæ¿È¤òËä¤á¤ë
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	//ÄºÅÀ¥Ç¡¼¥¿¤ÎÈÏ°Ï¤ò¥í¥Ã¥¯¤·¡¢ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤Ø¤Î¥İ¥¤¥ó¥¿¤ò¼èÆÀ
 	g_pVtxBufferPlayer->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntPlayer = 0; nCntPlayer < MAX_PLAYER; nCntPlayer++, pVtx+=4)
@@ -313,14 +313,14 @@ HRESULT MakeVertexPlayer(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ’¸“_À•W‚Ìİ’è
+		// ÄºÅÀºÂÉ¸¤ÎÀßÄê
 		pVtx[0].pos = D3DXVECTOR3(g_player[nCntPlayer].pos.x - (POLYGON_SIZE_X/2), g_player[nCntPlayer].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_player[nCntPlayer].pos.x + (POLYGON_SIZE_X/2), g_player[nCntPlayer].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_player[nCntPlayer].pos.x - (POLYGON_SIZE_X/2), g_player[nCntPlayer].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_player[nCntPlayer].pos.x + (POLYGON_SIZE_X/2), g_player[nCntPlayer].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 
 
-		//ƒeƒNƒXƒ`ƒƒÀ•Ww’è
+		//¥Æ¥¯¥¹¥Á¥ãºÂÉ¸»ØÄê
 		pVtx[0].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X) );
 		pVtx[1].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X + 1) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X));
 		pVtx[2].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X), TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X + 1));
@@ -336,21 +336,21 @@ HRESULT MakeVertexPlayer(LPDIRECT3DDEVICE9 pDevice)
 
 
 /*******************************************************************************
-ŠÖ”–¼:	void UpdatePolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	XVˆ—
+´Ø¿ôÌ¾:	void UpdatePolygon(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	¹¹¿·½èÍı
 *******************************************************************************/
 void UpdatePlayer(void)
 {
 	MAP *pMap = GetMap();
 	ENEMY *pEnemy = GetEnemy();
 	
-	int normalDir[4][2] = { //‡”Ô‚Ítexture‚É‡‚í‚¹‚é
-		{0,1}, //‰º
-		{-1,0}, //¶
-		{1,0},  //‰E
-		{0,-1}   //ã
+	int normalDir[4][2] = { //½çÈÖ¤Ïtexture¤Ë¹ç¤ï¤»¤ë
+		{0,1}, //²¼
+		{-1,0}, //º¸
+		{1,0},  //±¦
+		{0,-1}   //¾å
 	};
 
 	//GAME OVER
@@ -379,7 +379,7 @@ void UpdatePlayer(void)
 			}
 			break;
 		case GAME_BATTLE:
-			if(alive == 1) //Ÿ—˜Ò‚ª‚ ‚é
+			if(alive == 1) //¾¡Íø¼Ô¤¬¤¢¤ë
 			{
 				ChangeNumWin(who_alive, 1);
 				SetGameStep(STEP_CLEAR);
@@ -411,7 +411,7 @@ void UpdatePlayer(void)
 				//SE
 				SetSE(SOUND_LABEL_SE_GAMESTART);	
 			}
-			else if(alive == 0) //‘Sˆõ€‚ñ‚Å‚µ‚Ü‚Á‚½
+			else if(alive == 0) //Á´°÷»à¤ó¤Ç¤·¤Ş¤Ã¤¿
 			{
 				SetGameStep(STEP_CLEAR);
 				SetMessage(MSG_DRAW); 
@@ -434,20 +434,20 @@ void UpdatePlayer(void)
 				SetItem( ITEM_GRAVE, g_player[nCntPlayer].dotPos);
 			}
 
-			//ˆÚ“®ˆÊ’u’²®
-			if(abs(g_player[nCntPlayer].pos.x - DotPos2Pos(g_player[nCntPlayer].dotPos).x) < g_player[nCntPlayer].move.x && abs(g_player[nCntPlayer].pos.y - DotPos2Pos(g_player[nCntPlayer].dotPos).y) < g_player[nCntPlayer].move.y )
+			//°ÜÆ°°ÌÃÖÄ´À°
+			if(fabs(g_player[nCntPlayer].pos.x - DotPos2Pos(g_player[nCntPlayer].dotPos).x) < g_player[nCntPlayer].move.x && fabs(g_player[nCntPlayer].pos.y - DotPos2Pos(g_player[nCntPlayer].dotPos).y) < g_player[nCntPlayer].move.y )
 			{
 				g_player[nCntPlayer].pos = DotPos2Pos(g_player[nCntPlayer].dotPos);
 				g_player[nCntPlayer].walking = false;
 			}
 
-			//ƒvƒŒ[ƒ„[‚Æ“G‚Ì“–‚½‚è”»’è
+			//¥×¥ì¡¼¥ä¡¼¤ÈÅ¨¤ÎÅö¤¿¤êÈ½Äê
 			if( ( CollisionCheckPlayerBoss(nCntPlayer) || CollisionCheckPlayerEnemy(nCntPlayer) ) && !g_player[nCntPlayer].status[STATUS_UNDEAD])
 			{
 				if(g_player[nCntPlayer].status[STATUS_GUARD])
 				{
 					g_player[nCntPlayer].status[STATUS_UNDEAD] = true;
-					g_player[nCntPlayer].nCounterStatus[STATUS_GUARD] = FRAME_STATUS_GUARD; //60FRAMEŒo‚Á‚½‚çASTATUS_GUARDÁ‚¦‚é
+					g_player[nCntPlayer].nCounterStatus[STATUS_GUARD] = FRAME_STATUS_GUARD; //60FRAME·Ğ¤Ã¤¿¤é¡¢STATUS_GUARD¾Ã¤¨¤ë
 
 					//SE
 					SetSE(SOUND_LABEL_SE_LOSTITEM);
@@ -480,7 +480,7 @@ void UpdatePlayer(void)
 			}
 
 		
-			//”š’e‚Ìİ’u
+			//ÇúÃÆ¤ÎÀßÃÖ
 			if( (GetKeyboardTrigger(keyOfPlayer[nCntPlayer][D_BOMBSET]) || GetGamePadTrigger( nCntPlayer, BUTTON_B) )  && !CollisionCheckPlayerEnemy(nCntPlayer))
 			{
 				if(g_player[nCntPlayer].bUseBomb < g_player[nCntPlayer].bombNum && pMap->item[(int)Pos2DotPos(g_player[nCntPlayer].pos).y][(int)Pos2DotPos(g_player[nCntPlayer].pos).x].type == ITEM_NONE)
@@ -493,7 +493,7 @@ void UpdatePlayer(void)
 
 			if(g_player[nCntPlayer].walking)
 			{
-				//ƒvƒŒ[ƒ„[‚ÌŸ‚ÌˆÊ’u‚É”š’e‚ª‚ ‚Á‚½‚ç
+				//¥×¥ì¡¼¥ä¡¼¤Î¼¡¤Î°ÌÃÖ¤ËÇúÃÆ¤¬¤¢¤Ã¤¿¤é
 				if(CollisionCheckPlayerBullet(nCntPlayer)  && pMap->item[(int)g_player[nCntPlayer].dotPos.y][(int)g_player[nCntPlayer].dotPos.x].type == ITEM_SETTED_BOMB && (g_player[nCntPlayer].dotPos.x != Pos2DotPos(g_player[nCntPlayer].pos).x || g_player[nCntPlayer].dotPos.y != Pos2DotPos(g_player[nCntPlayer].pos).y) ) 
 				{
 					g_player[nCntPlayer].dotPos.x -= normalDir[g_player[nCntPlayer].dir][0];
@@ -501,7 +501,7 @@ void UpdatePlayer(void)
 					g_player[nCntPlayer].pos = DotPos2Pos(g_player[nCntPlayer].dotPos);
 					g_player[nCntPlayer].walking = false;	
 				}
-				else //Ÿ‚ÌˆÊ’u‚ÉˆÚ“®‚·‚é
+				else //¼¡¤Î°ÌÃÖ¤Ë°ÜÆ°¤¹¤ë
 				{
 					g_player[nCntPlayer].pos.x +=  normalDir[g_player[nCntPlayer].dir][0] * g_player[nCntPlayer].move.x;
 					g_player[nCntPlayer].pos.y +=  normalDir[g_player[nCntPlayer].dir][1] * g_player[nCntPlayer].move.y;
@@ -509,30 +509,30 @@ void UpdatePlayer(void)
 			}
 			else
 			{
-				// ˆÚ“®
+				// °ÜÆ°
 				bool keyPress_flag = false;
 				if(GetKeyboardRepeat(keyOfPlayer[nCntPlayer][D_UP]) || GetGamePadPress( nCntPlayer, BUTTON_UP) )
 				{
 					g_player[nCntPlayer].dir = D_UP;
-					if(g_player[nCntPlayer].status[STATUS_LEFTRIGHT]) g_player[nCntPlayer].dir = D_DOWN; //’†“Å
+					if(g_player[nCntPlayer].status[STATUS_LEFTRIGHT]) g_player[nCntPlayer].dir = D_DOWN; //ÃæÆÇ
 					keyPress_flag = true;
 				}
 				else if(GetKeyboardRepeat(keyOfPlayer[nCntPlayer][D_DOWN]) || GetGamePadPress( nCntPlayer, BUTTON_DOWN) )
 				{
 					g_player[nCntPlayer].dir = D_DOWN;
-					if(g_player[nCntPlayer].status[STATUS_LEFTRIGHT]) g_player[nCntPlayer].dir = D_UP; //’†“Å
+					if(g_player[nCntPlayer].status[STATUS_LEFTRIGHT]) g_player[nCntPlayer].dir = D_UP; //ÃæÆÇ
 					keyPress_flag = true;
 				}
 				else if(GetKeyboardRepeat(keyOfPlayer[nCntPlayer][D_LEFT]) || GetGamePadPress( nCntPlayer, BUTTON_LEFT) )
 				{
 					g_player[nCntPlayer].dir = D_LEFT;
-					if(g_player[nCntPlayer].status[STATUS_LEFTRIGHT]) g_player[nCntPlayer].dir = D_RIGHT; //’†“Å
+					if(g_player[nCntPlayer].status[STATUS_LEFTRIGHT]) g_player[nCntPlayer].dir = D_RIGHT; //ÃæÆÇ
 					keyPress_flag = true;
 				}
 				else if(GetKeyboardRepeat(keyOfPlayer[nCntPlayer][D_RIGHT]) || GetGamePadPress( nCntPlayer, BUTTON_RIGHT) )
 				{
 					g_player[nCntPlayer].dir = D_RIGHT;
-					if(g_player[nCntPlayer].status[STATUS_LEFTRIGHT]) g_player[nCntPlayer].dir = D_LEFT; //’†“Å
+					if(g_player[nCntPlayer].status[STATUS_LEFTRIGHT]) g_player[nCntPlayer].dir = D_LEFT; //ÃæÆÇ
 					keyPress_flag = true;
 				}
 
@@ -550,23 +550,23 @@ void UpdatePlayer(void)
 			
 			}
 	
-			// ’¸“_À•W‚Ìİ’è
+			// ÄºÅÀºÂÉ¸¤ÎÀßÄê
 			SetVertexPlayer(nCntPlayer);
 
-			//Œü‚«•ÏX
+			//¸ş¤­ÊÑ¹¹
 			SetTexturePlayer(nCntPlayer, g_player[nCntPlayer].nPatternAnim, g_player[nCntPlayer].dir);
 	
-			//ƒAƒjƒ•\Œ»
+			//¥¢¥Ë¥áÉ½¸½
 			g_player[nCntPlayer].nCounterAnim++;
 			if((g_player[nCntPlayer].nCounterAnim % TIME_CHANGE_PATTERN) == 0)
 			{
-				// ƒpƒ^[ƒ“‚ÌØ‚è‘Ö‚¦
+				// ¥Ñ¥¿¡¼¥ó¤ÎÀÚ¤êÂØ¤¨
 				g_player[nCntPlayer].nPatternAnim = (g_player[nCntPlayer].nPatternAnim + 1) % TEX_PATTERN_DIVIDE_X;
 
-				// ƒeƒNƒXƒ`ƒƒÀ•W‚ğİ’è
+				// ¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤òÀßÄê
 				SetTexturePlayer(nCntPlayer, g_player[nCntPlayer].nPatternAnim, g_player[nCntPlayer].dir);
 
-				//nCounterAnim‚ÌƒŠƒZƒbƒg
+				//nCounterAnim¤Î¥ê¥»¥Ã¥È
 				g_player[nCntPlayer].nCounterAnim = 0;
 			}			
 		}
@@ -577,51 +577,51 @@ void UpdatePlayer(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetVertexPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	’¸“_À•W‚Ìİ’è
+´Ø¿ôÌ¾:	void SetVertexPolygon(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	ÄºÅÀºÂÉ¸¤ÎÀßÄê
 *******************************************************************************/
 void SetVertexPlayer(int nCntPlayer)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤ÎÃæ¿È¤òËä¤á¤ë
 		VERTEX_2D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// ÄºÅÀ¥Ç¡¼¥¿¤ÎÈÏ°Ï¤ò¥í¥Ã¥¯¤·¡¢ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤Ø¤Î¥İ¥¤¥ó¥¿¤ò¼èÆÀ
 		g_pVtxBufferPlayer->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += nCntPlayer * NUM_VERTEX; 
 
-		// ’¸“_À•W‚Ìİ’è
+		// ÄºÅÀºÂÉ¸¤ÎÀßÄê
 		pVtx[0].pos = D3DXVECTOR3(g_player[nCntPlayer].pos.x - (g_player[nCntPlayer].size.x/2), g_player[nCntPlayer].pos.y - (g_player[nCntPlayer].size.y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_player[nCntPlayer].pos.x + (g_player[nCntPlayer].size.x/2), g_player[nCntPlayer].pos.y - (g_player[nCntPlayer].size.y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_player[nCntPlayer].pos.x - (g_player[nCntPlayer].size.x/2), g_player[nCntPlayer].pos.y + (g_player[nCntPlayer].size.y/2), 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_player[nCntPlayer].pos.x + (g_player[nCntPlayer].size.x/2), g_player[nCntPlayer].pos.y + (g_player[nCntPlayer].size.y/2), 0.0f);
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// ÄºÅÀ¥Ç¡¼¥¿¤ò¥¢¥ó¥í¥Ã¥¯¤¹¤ë
 		g_pVtxBufferPlayer->Unlock();
 	}
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetTexturePolygon(int nPatternAnim)
-ˆø”:	int nPatternAnim : ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“No.
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+´Ø¿ôÌ¾:	void SetTexturePolygon(int nPatternAnim)
+°ú¿ô:	int nPatternAnim : ¥¢¥Ë¥á¡¼¥·¥ç¥ó¥Ñ¥¿¡¼¥óNo.
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤ÎÀßÄê
 *******************************************************************************/
 void SetTexturePlayer(int nCntPlayer, int nPatternAnim, DIRECTION dir)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤ÎÃæ¿È¤òËä¤á¤ë
 		VERTEX_2D *pVtx;
 		float fPosXLeft, fPosXRight;
 		float fPosYUp, fPosYDown;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// ÄºÅÀ¥Ç¡¼¥¿¤ÎÈÏ°Ï¤ò¥í¥Ã¥¯¤·¡¢ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤Ø¤Î¥İ¥¤¥ó¥¿¤ò¼èÆÀ
 		g_pVtxBufferPlayer->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += nCntPlayer * NUM_VERTEX; 
 
-		// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		// ¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤ÎÀßÄê
 		fPosXLeft	= TEX_PATTERN_SIZE_X * (nPatternAnim % TEX_PATTERN_DIVIDE_X);
 		fPosXRight	= TEX_PATTERN_SIZE_X * (nPatternAnim % TEX_PATTERN_DIVIDE_X + 1);
 		fPosYUp		= TEX_PATTERN_SIZE_Y * dir;
@@ -633,7 +633,7 @@ void SetTexturePlayer(int nCntPlayer, int nPatternAnim, DIRECTION dir)
 		pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
 		pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// ÄºÅÀ¥Ç¡¼¥¿¤ò¥¢¥ó¥í¥Ã¥¯¤¹¤ë
 		g_pVtxBufferPlayer->Unlock();
 	}
 }
@@ -647,7 +647,7 @@ bool CollisionCheckPlayerBullet(int nCntPlayer)
 	{
 		if(pBullet[nCntBullet].bUse)
 		{
-			//ƒoƒEƒ“ƒfƒBƒ“ƒOƒXƒtƒBƒA
+			//¥Ğ¥¦¥ó¥Ç¥£¥ó¥°¥¹¥Õ¥£¥¢
 			if( (g_player[nCntPlayer].pos.x - pBullet[nCntBullet].pos.x)*(g_player[nCntPlayer].pos.x - pBullet[nCntBullet].pos.x) + (g_player[nCntPlayer].pos.y - pBullet[nCntBullet].pos.y)*(g_player[nCntPlayer].pos.y - pBullet[nCntBullet].pos.y) < (POLYGON_SIZE_X/2 + pBullet[nCntBullet].size.x/2)*(POLYGON_SIZE_X/2+pBullet[nCntBullet].size.x/2) )
 			{
 				return true;
@@ -668,7 +668,7 @@ bool CollisionCheckPlayerEnemy(int nCntPlayer)
 	{
 		if(pEnemy[nCntEnemy].bUse)
 		{
-			//ƒoƒEƒ“ƒfƒBƒ“ƒOƒXƒtƒBƒA
+			//¥Ğ¥¦¥ó¥Ç¥£¥ó¥°¥¹¥Õ¥£¥¢
 			if( (g_player[nCntPlayer].pos.x - pEnemy[nCntEnemy].pos.x)*(g_player[nCntPlayer].pos.x - pEnemy[nCntEnemy].pos.x) + (g_player[nCntPlayer].pos.y - pEnemy[nCntEnemy].pos.y)*(g_player[nCntPlayer].pos.y - pEnemy[nCntEnemy].pos.y) < (PLAYER_ATARI + pEnemy[nCntEnemy].size.x/2)*(PLAYER_ATARI + pEnemy[nCntEnemy].size.x/2) )
 			{
 				return true;
@@ -688,7 +688,7 @@ bool CollisionCheckPlayerBoss(int nCntPlayer)
 	{
 		if(pBoss[nCntEnemy].bUse)
 		{
-			//ƒoƒEƒ“ƒfƒBƒ“ƒOƒXƒtƒBƒA
+			//¥Ğ¥¦¥ó¥Ç¥£¥ó¥°¥¹¥Õ¥£¥¢
 			if( (g_player[nCntPlayer].pos.x - pBoss[nCntEnemy].pos.x)*(g_player[nCntPlayer].pos.x - pBoss[nCntEnemy].pos.x) + (g_player[nCntPlayer].pos.y - pBoss[nCntEnemy].pos.y)*(g_player[nCntPlayer].pos.y - pBoss[nCntEnemy].pos.y) < (PLAYER_ATARI + pBoss[nCntEnemy].size.x/2.5)*(PLAYER_ATARI + pBoss[nCntEnemy].size.x/2.5) )
 			{
 				return true;
@@ -701,10 +701,10 @@ bool CollisionCheckPlayerBoss(int nCntPlayer)
 
 
 /*******************************************************************************
-ŠÖ”–¼:	PLAYER GetPlayer(void)
-ˆø”:	‚È‚µ
-–ß‚è’l: PLAYERFPLAYER‚Ì\‘¢‘Ì
-à–¾:	“–‚½‚è”»’è‚È‚Ç‚ÌAƒvƒŒ[ƒ„[‚Ìî•ñ‚ğ“Ç‚İæ‚è
+´Ø¿ôÌ¾:	PLAYER GetPlayer(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ: PLAYER¡§PLAYER¤Î¹½Â¤ÂÎ
+ÀâÌÀ:	Åö¤¿¤êÈ½Äê¤Ê¤É¤Î»ş¡¢¥×¥ì¡¼¥ä¡¼¤Î¾ğÊó¤òÆÉ¤ß¼è¤ê
 *******************************************************************************/
 PLAYER *GetPlayer(void)
 {
@@ -714,10 +714,10 @@ PLAYER *GetPlayer(void)
 
 void SetColorPlayer(int nCntPlayer, int R, int G, int B, int A)
 {
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤ÎÃæ¿È¤òËä¤á¤ë
 	VERTEX_2D *pVtx;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	// ÄºÅÀ¥Ç¡¼¥¿¤ÎÈÏ°Ï¤ò¥í¥Ã¥¯¤·¡¢ÄºÅÀ¥Ğ¥Ã¥Õ¥¡¤Ø¤Î¥İ¥¤¥ó¥¿¤ò¼èÆÀ
 	g_pVtxBufferPlayer->Lock(0, 0, (void**)&pVtx, 0);
 
 	pVtx += nCntPlayer * NUM_VERTEX; 
@@ -728,7 +728,7 @@ void SetColorPlayer(int nCntPlayer, int R, int G, int B, int A)
 	pVtx[2].col = D3DCOLOR_RGBA(R,G,B,A);
 	pVtx[3].col = D3DCOLOR_RGBA(R,G,B,A);
 
-	// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+	// ÄºÅÀ¥Ç¡¼¥¿¤ò¥¢¥ó¥í¥Ã¥¯¤¹¤ë
 	g_pVtxBufferPlayer->Unlock();
 	
 }
@@ -756,7 +756,7 @@ HRESULT ResetAllPlayer(void)
 					break;
 			}
 
-			//player‚Ì‰Šú‰»
+			//player¤Î½é´ü²½
 			g_player[nCntPlayer].pos = DotPos2Pos(g_player[nCntPlayer].dotPos);
 			g_player[nCntPlayer].dir = D_DOWN;
 			g_player[nCntPlayer].nCounterAnim = 0;
@@ -786,7 +786,7 @@ HRESULT SetPlayerAnimation(int nPlayerIdx, PICTURE_CHARACTOER type)
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ            ƒtƒ@ƒCƒ‹‚Ì–¼‘O        “Ç‚İ‚Şƒƒ‚ƒŠ[
+	// ¥Æ¥¯¥¹¥Á¥ã¤ÎÆÉ¤ß¹ş¤ß            ¥Õ¥¡¥¤¥ë¤ÎÌ¾Á°        ÆÉ¤ß¹ş¤à¥á¥â¥ê¡¼
 	D3DXCreateTextureFromFile(pDevice, textureName[ type ], &g_pTexturePlayer[nPlayerIdx]);	
 
 	return S_OK;

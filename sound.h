@@ -1,8 +1,8 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ƒTƒEƒ“ƒhˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	sound.h
-// ì¬ŽÒ:			HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		ã‚µã‚¦ãƒ³ãƒ‰å‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	sound.h
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
@@ -13,7 +13,7 @@
 #include "main.h"
 
 //*****************************************************************************
-// ƒTƒEƒ“ƒhƒtƒ@ƒCƒ‹
+// ã‚µã‚¦ãƒ³ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 //*****************************************************************************
 typedef enum
 {
@@ -21,22 +21,22 @@ typedef enum
 	SOUND_LABEL_BGM_CS,			// BGM Character Select
 	SOUND_LABEL_BGM_PLAY,		// BGM game playing
 	SOUND_LABEL_BGM_RANK,		// BGM rank
-	SOUND_LABEL_SE_BOSSHURT,	// BOSS‰ö‰ä
-	SOUND_LABEL_SE_COUNTDOWN,	// countdown‰¹
-	SOUND_LABEL_SE_DEATH,		// Ž€–S‰¹
-	SOUND_LABEL_SE_ENEMYDEATH,	// ŽG‹›Ž€–S
-	SOUND_LABEL_SE_EXPLOSION01,	// ”š”­‰¹
-	SOUND_LABEL_SE_EXPLOSION02,	// ”š”­‰¹
+	SOUND_LABEL_SE_BOSSHURT,	// BOSSæ€ªæˆ‘
+	SOUND_LABEL_SE_COUNTDOWN,	// countdownéŸ³
+	SOUND_LABEL_SE_DEATH,		// æ­»äº¡éŸ³
+	SOUND_LABEL_SE_ENEMYDEATH,	// é›‘é­šæ­»äº¡
+	SOUND_LABEL_SE_EXPLOSION01,	// çˆ†ç™ºéŸ³
+	SOUND_LABEL_SE_EXPLOSION02,	// çˆ†ç™ºéŸ³
 	SOUND_LABEL_SE_GAMEOVER,	// GameOver
-	SOUND_LABEL_SE_GETITEM,		// ƒAƒCƒeƒ€ƒQƒbƒg
-	SOUND_LABEL_SE_HURT,		// ‰ö‰ä‰¹
-	SOUND_LABEL_SE_LOSTITEM,	// ƒAƒCƒeƒ€Œø‰Ê‚ªÁ‚¦‚Á‚½
+	SOUND_LABEL_SE_GETITEM,		// ã‚¢ã‚¤ãƒ†ãƒ ã‚²ãƒƒãƒˆ
+	SOUND_LABEL_SE_HURT,		// æ€ªæˆ‘éŸ³
+	SOUND_LABEL_SE_LOSTITEM,	// ã‚¢ã‚¤ãƒ†ãƒ åŠ¹æžœãŒæ¶ˆãˆã£ãŸ
 	SOUND_LABEL_SE_OK,			// OK
-	SOUND_LABEL_SE_POISON,		// ’†“Å
-	SOUND_LABEL_SE_SELECT,		// ‘I‘ð
-	SOUND_LABEL_SE_SETBOMB,		// ”š’eÝ’u
-	SOUND_LABEL_SE_GAMESTART,	// ƒQ[ƒ€ƒXƒ^[ƒg
-	SOUND_LABEL_SE_SWITCH,		// — ‹Z‚Ìƒ{ƒ^ƒ“@@@@@@@
+	SOUND_LABEL_SE_POISON,		// ä¸­æ¯’
+	SOUND_LABEL_SE_SELECT,		// é¸æŠž
+	SOUND_LABEL_SE_SETBOMB,		// çˆ†å¼¾è¨­ç½®
+	SOUND_LABEL_SE_GAMESTART,	// ã‚²ãƒ¼ãƒ ã‚¹ã‚¿ãƒ¼ãƒˆ
+	SOUND_LABEL_SE_SWITCH,		// è£æŠ€ã®ãƒœã‚¿ãƒ³ã€€ã€€ã€€ã€€ã€€ã€€ã€€
 
 	SOUND_LABEL_MAX,
 } SOUND_LABEL;
@@ -57,7 +57,7 @@ typedef enum
 }SE_MODE;
 
 //*****************************************************************************
-// ƒvƒƒgƒ^ƒCƒvéŒ¾
+// ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 //*****************************************************************************
 HRESULT InitSound(HWND hWnd);
 void UninitSound(void);

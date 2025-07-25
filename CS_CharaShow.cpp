@@ -1,14 +1,14 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ƒLƒƒƒ‰‘I‘ð‚ÌƒLƒƒƒ‰ƒNƒ^[•\Ž¦ˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	CS_CharaShow.cpp
-// ì¬ŽÒ:			HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		ã‚­ãƒ£ãƒ©é¸æŠžã®ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼è¡¨ç¤ºå‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	CS_CharaShow.cpp
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "main.h"
@@ -18,15 +18,15 @@
 
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
-#define	TEX_PATTERN_DIVIDE_X		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
 
 #define MAX_CHARA_INTRO	(8)
 
@@ -41,17 +41,17 @@
 
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexCS_Intro(LPDIRECT3DDEVICE9 pDevice);
 void SetVertexCharaIntro(int nCharaIdx);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferCS_Intro = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureCS_Intro[MAX_CHARA_INTRO] = {NULL};
@@ -62,10 +62,10 @@ CS_INTRO g_charaIntro[MAX_PLAYER];
 PICTURE_CHARACTOER *OldcharaList = NULL;
 
 /*******************************************************************************
-ŠÖ”–¼:	void InitTitle(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒQ[ƒ€ƒ^ƒCƒgƒ‹‚Ì‰Šú‰»ˆ—
+é–¢æ•°å:	void InitTitle(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ã‚²ãƒ¼ãƒ ã‚¿ã‚¤ãƒˆãƒ«ã®åˆæœŸåŒ–å‡¦ç†
 *******************************************************************************/
 HRESULT InitCS_CharaShow(void)
 {
@@ -84,7 +84,7 @@ HRESULT InitCS_CharaShow(void)
 		pPlayer[nCntPlayer].size = D3DXVECTOR3(50, 50, 0.0);
 	}
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexPlayer(pDevice)))
 	{
 		return E_FAIL;
@@ -102,14 +102,14 @@ HRESULT InitCS_CharaShow(void)
 	g_charaIntro[2].pos = D3DXVECTOR3( 200, 550, 0.0f);
 	g_charaIntro[3].pos = D3DXVECTOR3( 1050, 550, 0.0f);
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 
 	if(FAILED(MakeVertexCS_Intro(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice,POLYGON_TEXTURENAME_CS_INTRO00	, &g_pTextureCS_Intro[CHARACTOER0]);
 	D3DXCreateTextureFromFile( pDevice,POLYGON_TEXTURENAME_CS_INTRO01	, &g_pTextureCS_Intro[CHARACTOER1]);
 	D3DXCreateTextureFromFile( pDevice,POLYGON_TEXTURENAME_CS_INTRO02	, &g_pTextureCS_Intro[CHARACTOER2]);
@@ -123,10 +123,10 @@ HRESULT InitCS_CharaShow(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void UpdateTitle(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒQ[ƒ€ƒ^ƒCƒgƒ‹‚ÌXVŠÖ”
+é–¢æ•°å:	void UpdateTitle(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ã‚²ãƒ¼ãƒ ã‚¿ã‚¤ãƒˆãƒ«ã®æ›´æ–°é–¢æ•°
 *******************************************************************************/
 void Update_CharaShow(void)
 {
@@ -151,23 +151,23 @@ void Update_CharaShow(void)
 			}
 
 
-			// ’¸“_À•W‚ÌÝ’è
+			// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 			SetVertexPlayer(nCntPlayer);
 
-			//Œü‚«•ÏX
+			//å‘ãå¤‰æ›´
 			SetTexturePlayer(nCntPlayer, pPlayer[nCntPlayer].nPatternAnim, D_DOWN);
 	
-			//ƒAƒjƒ•\Œ»
+			//ã‚¢ãƒ‹ãƒ¡è¡¨ç¾
 			pPlayer[nCntPlayer].nCounterAnim++;
 			if((pPlayer[nCntPlayer].nCounterAnim % 10 ) == 0) //10frame change pattern
 			{
-				// ƒpƒ^[ƒ“‚ÌØ‚è‘Ö‚¦
+				// ãƒ‘ã‚¿ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
 				pPlayer[nCntPlayer].nPatternAnim = (pPlayer[nCntPlayer].nPatternAnim + 1) % 3; //3 pattern 
 
-				// ƒeƒNƒXƒ`ƒƒÀ•W‚ðÝ’è
+				// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã‚’è¨­å®š
 				SetTexturePlayer(nCntPlayer, pPlayer[nCntPlayer].nPatternAnim, D_DOWN);
 
-				//nCounterAnim‚ÌƒŠƒZƒbƒg
+				//nCounterAnimã®ãƒªã‚»ãƒƒãƒˆ
 				pPlayer[nCntPlayer].nCounterAnim = 0;
 			}	
 		}
@@ -177,33 +177,33 @@ void Update_CharaShow(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void DrawTitle(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒQ[ƒ€ƒ^ƒCƒgƒ‹‚Ì•`‰æŠÖ”
+é–¢æ•°å:	void DrawTitle(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ã‚²ãƒ¼ãƒ ã‚¿ã‚¤ãƒˆãƒ«ã®æç”»é–¢æ•°
 *******************************************************************************/
 void DrawCS_CharaShow(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferCS_Intro, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	for(int nCntChara = 0; nCntChara < MAX_PLAYER; nCntChara++)
 	{
 		if(g_charaIntro[nCntChara].bUse)
 		{
-			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 			pDevice->SetTexture(0, g_pTextureCS_Intro[ g_charaIntro[nCntChara].type ]);
 
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//ãƒãƒªã‚´ãƒ³ã®æç”»
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-				nCntChara*4,			//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+				nCntChara*4,			//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);			
 		}
 	}
@@ -213,10 +213,10 @@ void DrawCS_CharaShow(void)
 	DrawPlayer();
 }
 /*******************************************************************************
-ŠÖ”–¼:	void UninitTitle(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒQ[ƒ€ƒ^ƒCƒgƒ‹‚ÌŠJ•úŠÖ”
+é–¢æ•°å:	void UninitTitle(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ã‚²ãƒ¼ãƒ ã‚¿ã‚¤ãƒˆãƒ«ã®é–‹æ”¾é–¢æ•°
 *******************************************************************************/
 void Uninit_CharaShow(void)
 {
@@ -241,21 +241,21 @@ void Uninit_CharaShow(void)
 HRESULT MakeVertexCS_Intro(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_PLAYER,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_PLAYER,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferCS_Intro,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferCS_Intro,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferCS_Intro->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntChara = 0; nCntChara < MAX_PLAYER; nCntChara++, pVtx+=4)
@@ -273,14 +273,14 @@ HRESULT MakeVertexCS_Intro(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ’¸“_À•W‚ÌÝ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_charaIntro[nCntChara].pos.x - (g_charaIntro[nCntChara].size.x/2), g_charaIntro[nCntChara].pos.y - (g_charaIntro[nCntChara].size.y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_charaIntro[nCntChara].pos.x + (g_charaIntro[nCntChara].size.x/2), g_charaIntro[nCntChara].pos.y - (g_charaIntro[nCntChara].size.y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_charaIntro[nCntChara].pos.x - (g_charaIntro[nCntChara].size.x/2), g_charaIntro[nCntChara].pos.y + (g_charaIntro[nCntChara].size.y/2), 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_charaIntro[nCntChara].pos.x + (g_charaIntro[nCntChara].size.x/2), g_charaIntro[nCntChara].pos.y + (g_charaIntro[nCntChara].size.y/2), 0.0f);
 
 
-		//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X) );
 		pVtx[1].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X + 1) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X));
 		pVtx[2].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X), TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X + 1));
@@ -295,28 +295,28 @@ HRESULT MakeVertexCS_Intro(LPDIRECT3DDEVICE9 pDevice)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetVertexPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	’¸“_À•W‚ÌÝ’è
+é–¢æ•°å:	void SetVertexPolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 *******************************************************************************/
 void SetVertexCharaIntro(int nCharaIdx)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pVtxBufferCS_Intro->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += nCharaIdx * NUM_VERTEX; 
 
-		// ’¸“_À•W‚ÌÝ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_charaIntro[nCharaIdx].pos.x - (g_charaIntro[nCharaIdx].size.x/2), g_charaIntro[nCharaIdx].pos.y - (g_charaIntro[nCharaIdx].size.y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_charaIntro[nCharaIdx].pos.x + (g_charaIntro[nCharaIdx].size.x/2), g_charaIntro[nCharaIdx].pos.y - (g_charaIntro[nCharaIdx].size.y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_charaIntro[nCharaIdx].pos.x - (g_charaIntro[nCharaIdx].size.x/2), g_charaIntro[nCharaIdx].pos.y + (g_charaIntro[nCharaIdx].size.y/2), 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_charaIntro[nCharaIdx].pos.x + (g_charaIntro[nCharaIdx].size.x/2), g_charaIntro[nCharaIdx].pos.y + (g_charaIntro[nCharaIdx].size.y/2), 0.0f);
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pVtxBufferCS_Intro->Unlock();
 	}
 }

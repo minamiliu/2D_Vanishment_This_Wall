@@ -1,13 +1,13 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ƒŠƒUƒ‹ƒg‚Ìƒoƒgƒ‹Œ‹‰ÊUI•\Ž¦ˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	result_kdw_tex.cpp
-// ì¬ŽÒ:			HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		ãƒªã‚¶ãƒ«ãƒˆã®ãƒãƒˆãƒ«çµæžœUIè¡¨ç¤ºå‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	result_kdw_tex.cpp
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "result_kdw_tex.h"
@@ -16,7 +16,7 @@
 
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
@@ -47,16 +47,16 @@
 
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexResultKDWTex(LPDIRECT3DDEVICE9 pDevice);
 void SetVertexResultKDWTex(int nIconIdx);
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferResultKDWTex = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureResultKDWTex[MAX_KDW_ICON] = {NULL};
@@ -65,10 +65,10 @@ RESULT_KDW_TEX	g_KDWIcon[MAX_KDW_ICON];
 float g_angle3;
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ì‰Šú‰»ˆ—
+é–¢æ•°å:	HRESULT InitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	èƒŒæ™¯ã®åˆæœŸåŒ–å‡¦ç†
 *******************************************************************************/
 HRESULT InitResultKDWTex(void)
 {
@@ -169,13 +169,13 @@ HRESULT InitResultKDWTex(void)
 	
 
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexResultKDWTex(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_TEX_P1, &g_pTextureResultKDWTex[0]);
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_TEX_KILL, &g_pTextureResultKDWTex[1]);
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_TEX_DEATH, &g_pTextureResultKDWTex[2]);
@@ -201,20 +201,20 @@ HRESULT InitResultKDWTex(void)
 	return S_OK;
 }
 /*******************************************************************************
-ŠÖ”–¼:	void DrawBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+é–¢æ•°å:	void DrawBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®æç”»é–¢æ•°
 *******************************************************************************/
 void DrawResultKDWTex(void)
 {
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferResultKDWTex, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	for(int nCntIcon = 0; nCntIcon < MAX_KDW_ICON; nCntIcon++)
@@ -222,14 +222,14 @@ void DrawResultKDWTex(void)
 		if(g_KDWIcon[nCntIcon].bUse)
 		{
 
-			//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 			pDevice->SetTexture(0, g_pTextureResultKDWTex[nCntIcon]);
 
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//ãƒãƒªã‚´ãƒ³ã®æç”»
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-				nCntIcon*4,			//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+				nCntIcon*4,			//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);				
 		}
 	
@@ -238,10 +238,10 @@ void DrawResultKDWTex(void)
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	void UninitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+é–¢æ•°å:	void UninitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é–‹æ”¾é–¢æ•°
 *******************************************************************************/
 void UninitResultKDWTex(void)
 {
@@ -263,34 +263,34 @@ void UninitResultKDWTex(void)
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexResultKDWTex(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_KDW_ICON,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_KDW_ICON,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferResultKDWTex,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferResultKDWTex,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferResultKDWTex->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntIcon = 0; nCntIcon < MAX_KDW_ICON; nCntIcon++,pVtx+=4)
 	{
 
-		//’¸“_À•W‚ÌÝ’è
+		//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3( g_KDWIcon[nCntIcon].pos.x, g_KDWIcon[nCntIcon].pos.y, 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_KDWIcon[nCntIcon].pos.x + g_KDWIcon[nCntIcon].size.x, g_KDWIcon[nCntIcon].pos.y, 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_KDWIcon[nCntIcon].pos.x, g_KDWIcon[nCntIcon].pos.y + g_KDWIcon[nCntIcon].size.y, 0.0f);
@@ -310,7 +310,7 @@ HRESULT MakeVertexResultKDWTex(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = g_KDWIcon[nCntIcon].col;
 		pVtx[3].col = g_KDWIcon[nCntIcon].col;
 
-		//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 		pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 		pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
@@ -326,7 +326,7 @@ HRESULT MakeVertexResultKDWTex(LPDIRECT3DDEVICE9 pDevice)
 
 void UpdateResultKDWTex(void)
 {
-	for(int nCntCrown = 3; nCntCrown < MAX_KDW_ICON; nCntCrown+=4) //3 7 11 15‚ÌŽl‚Â
+	for(int nCntCrown = 3; nCntCrown < MAX_KDW_ICON; nCntCrown+=4) //3 7 11 15ã®å››ã¤
 	{
 		if(g_KDWIcon[nCntCrown].bUse)
 		{
@@ -344,21 +344,21 @@ void UpdateResultKDWTex(void)
 void SetVertexResultKDWTex(int nIconIdx)
 {
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferResultKDWTex->Lock( 0, 0, (void**)&pVtx, 0);
 
 	pVtx += nIconIdx * NUM_VERTEX; 
 
-	//’¸“_À•W‚ÌÝ’è
+	//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 	pVtx[0].pos = D3DXVECTOR3(g_KDWIcon[nIconIdx].pos.x - (g_KDWIcon[nIconIdx].size.x/2), g_KDWIcon[nIconIdx].pos.y - (g_KDWIcon[nIconIdx].size.y/2), 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(g_KDWIcon[nIconIdx].pos.x + (g_KDWIcon[nIconIdx].size.x/2), g_KDWIcon[nIconIdx].pos.y - (g_KDWIcon[nIconIdx].size.y/2), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(g_KDWIcon[nIconIdx].pos.x - (g_KDWIcon[nIconIdx].size.x/2), g_KDWIcon[nIconIdx].pos.y + (g_KDWIcon[nIconIdx].size.y/2), 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(g_KDWIcon[nIconIdx].pos.x + (g_KDWIcon[nIconIdx].size.x/2), g_KDWIcon[nIconIdx].pos.y + (g_KDWIcon[nIconIdx].size.y/2), 0.0f);
 
-	// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pVtxBufferResultKDWTex->Unlock();
 }
 

@@ -1,14 +1,14 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ŠÔ‚Ì•\¦ˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	time.cpp
-// ì¬Ò:			HAL“Œ‹ƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		æ™‚é–“ã®è¡¨ç¤ºå‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	time.cpp
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "time.h"
@@ -16,56 +16,56 @@
 #include "sound.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
 
-#define	TEXTURE_POLYGON				"data/TEXTURE/number003.png"// “Ç‚İ‚ŞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	POLYGON_POS_X				(590)							// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚wÀ•W)
-#define	POLYGON_POS_Y				(60)							// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚xÀ•W)
-#define	POLYGON_SIZE_X				(35)							// ƒ|ƒŠƒSƒ“‚Ì•
-#define	POLYGON_SIZE_Y				(70)							// ƒ|ƒŠƒSƒ“‚Ì‚‚³
+#define	TEXTURE_POLYGON				"data/TEXTURE/number003.png"// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	POLYGON_POS_X				(590)							// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¸åº§æ¨™)
+#define	POLYGON_POS_Y				(60)							// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¹åº§æ¨™)
+#define	POLYGON_SIZE_X				(35)							// ãƒãƒªã‚´ãƒ³ã®å¹…
+#define	POLYGON_SIZE_Y				(70)							// ãƒãƒªã‚´ãƒ³ã®é«˜ã•
 
-#define	TEX_PATTERN_DIVIDE_X		(10)							// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(10)							// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
 
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-#define	TIME_CHANGE_PATTERN			(10)							// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+#define	TIME_CHANGE_PATTERN			(10)							// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 
-#define	VALUE_MOVE					(0.0f)							// ƒ|ƒŠƒSƒ“‚ÌˆÚ“®—Ê
-#define NUM_OBJECT					(3)								// ƒIƒuƒWƒFƒNƒg‚Ì”
+#define	VALUE_MOVE					(0.0f)							// ãƒãƒªã‚´ãƒ³ã®ç§»å‹•é‡
+#define NUM_OBJECT					(3)								// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ•°
 #define STAGE_TIME					(100)
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexTime(LPDIRECT3DDEVICE9 pDevice);
 void SetTextureTime( int nIdx, int number);
 HRESULT ChangeVertexColor(LPDIRECT3DDEVICE9 pDevice, int R, int G, int B);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferTime = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureTime = NULL;
 
-TIME			g_time; //Time‚Ìƒ[ƒN
+TIME			g_time; //Timeã®ãƒ¯ãƒ¼ã‚¯
 int				nCounterSecond;
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	‰Šú‰»ˆ—
+é–¢æ•°å:	HRESULT InitPolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜:	åˆæœŸåŒ–å‡¦ç†
 *******************************************************************************/
 HRESULT InitTime(void)
 {
@@ -73,11 +73,11 @@ HRESULT InitTime(void)
 
 	nCounterSecond = 0;
 
-	//Time‚Ì‰Šú‰»
+	//Timeã®åˆæœŸåŒ–
 	g_time.pos = D3DXVECTOR3( POLYGON_POS_X, POLYGON_POS_Y, 0.0f);
 	g_time.time = STAGE_TIME;
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexTime(pDevice)))
 	{
 		return E_FAIL;
@@ -85,41 +85,41 @@ HRESULT InitTime(void)
 
 	SetTime(STAGE_TIME);
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	D3DXCreateTextureFromFile(pDevice,				// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-								TEXTURE_POLYGON,	// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-								&g_pTextureTime);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
+	D3DXCreateTextureFromFile(pDevice,				// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+								TEXTURE_POLYGON,	// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+								&g_pTextureTime);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
 
 	return S_OK;
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void DrawPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+é–¢æ•°å:	void DrawPolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜:	ãƒãƒªã‚´ãƒ³ã®æç”»é–¢æ•°
 *******************************************************************************/
 void DrawTime(void)
 {
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ğƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferTime, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, g_pTextureTime);
 
-	//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+	//ãƒãƒªã‚´ãƒ³ã®æç”»
 	for(int nCntPlace = 0; nCntPlace < NUM_OBJECT; nCntPlace++)
 	{
 		pDevice->DrawPrimitive(
-			D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚Ìí—Ş
-			(nCntPlace*NUM_VERTEX),						//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-			NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+			D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡
+			(nCntPlace*NUM_VERTEX),						//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 		);
 	}
 
@@ -127,10 +127,10 @@ void DrawTime(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void UninitTime(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+é–¢æ•°å:	void UninitTime(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜:	ãƒãƒªã‚´ãƒ³ã®é–‹æ”¾é–¢æ•°
 *******************************************************************************/
 void UninitTime(void)
 {
@@ -147,29 +147,29 @@ void UninitTime(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜:	ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexTime(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*NUM_OBJECT,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*NUM_OBJECT,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferTime,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferTime,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferTime->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntPlace = 0; nCntPlace < NUM_OBJECT; nCntPlace++, pVtx += NUM_VERTEX)
@@ -188,13 +188,13 @@ HRESULT MakeVertexTime(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ’¸“_À•W‚Ìİ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_time.pos.x - (POLYGON_SIZE_X/2) + nCntPlace*POLYGON_SIZE_X, g_time.pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_time.pos.x + (POLYGON_SIZE_X/2) + nCntPlace*POLYGON_SIZE_X, g_time.pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_time.pos.x - (POLYGON_SIZE_X/2) + nCntPlace*POLYGON_SIZE_X, g_time.pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_time.pos.x + (POLYGON_SIZE_X/2) + nCntPlace*POLYGON_SIZE_X, g_time.pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 
-		//ƒeƒNƒXƒ`ƒƒÀ•Ww’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X) );
 		pVtx[1].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X + 1) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X));
 		pVtx[2].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X), TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X + 1));
@@ -210,10 +210,10 @@ HRESULT MakeVertexTime(LPDIRECT3DDEVICE9 pDevice)
 
 
 /*******************************************************************************
-ŠÖ”–¼:	void UpdatePolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	XVˆ—
+é–¢æ•°å:	void UpdatePolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜:	æ›´æ–°å‡¦ç†
 *******************************************************************************/
 void UpdateTime(void)
 {
@@ -225,7 +225,7 @@ void UpdateTime(void)
 	{
 		if(g_time.time <= 10)
 		{
-			//’¸“_ƒJƒ‰[‚Ì•ÏX
+			//é ‚ç‚¹ã‚«ãƒ©ãƒ¼ã®å¤‰æ›´
 			ChangeVertexColor(pDevice,255,0,0);
 
 			//SE
@@ -250,25 +250,25 @@ void UpdateTime(void)
 
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetTextureTime( int nTdx, int number) 
-ˆø”:	 int nTdxF‰½Œ…–Ú‚©, int numberF•\¦‚·‚é”
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+é–¢æ•°å:	void SetTextureTime( int nTdx, int number) 
+å¼•æ•°:	 int nTdxï¼šä½•æ¡ç›®ã‹, int numberï¼šè¡¨ç¤ºã™ã‚‹æ•°
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜:	ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 *******************************************************************************/
 void SetTextureTime( int nIdx, int number) 
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 		float fPosXLeft, fPosXRight;
 		float fPosYUp, fPosYDown;
 		
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pVtxBufferTime->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += (NUM_OBJECT - nIdx) * NUM_VERTEX;
 
-		//ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 		fPosXLeft = TEX_PATTERN_SIZE_X * number;
 		fPosXRight = TEX_PATTERN_SIZE_X * number + TEX_PATTERN_SIZE_X;
 		fPosYUp = 0;
@@ -279,16 +279,16 @@ void SetTextureTime( int nIdx, int number)
 		pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
 		pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
 
-		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pVtxBufferTime->Unlock();
 	}
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void ChangeTime(int value)
-ˆø”:	int valueF‘‰Á‚·‚é“_”
-–ß‚è’l:	‚È‚µ
-à–¾:	‘“_”‚ğ•ÏX‚·‚é
+é–¢æ•°å:	void ChangeTime(int value)
+å¼•æ•°:	int valueï¼šå¢—åŠ ã™ã‚‹ç‚¹æ•°
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜:	ç·ç‚¹æ•°ã‚’å¤‰æ›´ã™ã‚‹
 *******************************************************************************/
 void SetTime(int value)
 {
@@ -305,10 +305,10 @@ void SetTime(int value)
 HRESULT ChangeVertexColor(LPDIRECT3DDEVICE9 pDevice, int R, int G, int B)
 {
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ğ–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferTime->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntPlace = 0; nCntPlace < NUM_OBJECT; nCntPlace++, pVtx += NUM_VERTEX)

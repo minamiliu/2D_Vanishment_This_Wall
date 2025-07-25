@@ -1,14 +1,14 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ƒ^ƒCƒgƒ‹‚Ìƒƒjƒ…[ˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	title_menu.cpp
-// ì¬ŽÒ:			HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		ã‚¿ã‚¤ãƒˆãƒ«ã®ãƒ¡ãƒ‹ãƒ¥ãƒ¼å‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	title_menu.cpp
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "title_menu.h"
@@ -17,13 +17,13 @@
 
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 #define MAX_TITLE_MENU	(3)
-#define POLYGON_SIZE_X	(300)//ƒ|ƒŠƒSƒ“‚ÌSIZE X
-#define POLYGON_SIZE_Y	(80)//ƒ|ƒŠƒSƒ“‚ÌSIZE Y
+#define POLYGON_SIZE_X	(300)//ãƒãƒªã‚´ãƒ³ã®SIZE X
+#define POLYGON_SIZE_Y	(80)//ãƒãƒªã‚´ãƒ³ã®SIZE Y
 
 #define POLYGON_TEXTURENAME_TITLE_MENU_0		"data/TEXTURE/TITLE/menu_COOPERATE.png"
 #define POLYGON_TEXTURENAME_TITLE_MENU_1		"data/TEXTURE/TITLE/menu_BATTLE.png"
@@ -32,18 +32,18 @@
 //#define POLYGON_TEXTURENAME_TITLE_MENU_4		"data/TEXTURE/TITLE/menu_ranking.png"
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexTitleMenu(LPDIRECT3DDEVICE9 pDevice);
 void SetColorTitleMenu(int nMenuIdx, int R, int G, int B, int A);
 void SetVertexTitleMenu(int nMenuIdx);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferTitleMenu = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureTitleMenu[MAX_TITLE_MENU] = {NULL};
@@ -53,10 +53,10 @@ TITLE_MENU	g_titleMenu[MAX_TITLE_MENU];
 int g_menu;
 float g_angle;
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ì‰Šú‰»ˆ—
+é–¢æ•°å:	HRESULT InitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	èƒŒæ™¯ã®åˆæœŸåŒ–å‡¦ç†
 *******************************************************************************/
 HRESULT InitTitleMenu(void)
 {
@@ -91,13 +91,13 @@ HRESULT InitTitleMenu(void)
 	//g_titleMenu[4].col = D3DCOLOR_RGBA(255,255,255,255); 
 
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexTitleMenu(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_TITLE_MENU_0, &g_pTextureTitleMenu[0]);
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_TITLE_MENU_1, &g_pTextureTitleMenu[1]);
 	D3DXCreateTextureFromFile( pDevice, POLYGON_TEXTURENAME_TITLE_MENU_2, &g_pTextureTitleMenu[2]);
@@ -107,43 +107,43 @@ HRESULT InitTitleMenu(void)
 	return S_OK;
 }
 /*******************************************************************************
-ŠÖ”–¼:	void DrawBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+é–¢æ•°å:	void DrawBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®æç”»é–¢æ•°
 *******************************************************************************/
 void DrawTitleMenu(void)
 {
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferTitleMenu, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 	for(int nCntIcon = 0; nCntIcon < MAX_TITLE_MENU; nCntIcon++)
 	{
 
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pDevice->SetTexture(0, g_pTextureTitleMenu[nCntIcon]);
 
-		//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+		//ãƒãƒªã‚´ãƒ³ã®æç”»
 		pDevice->DrawPrimitive(
-			D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-			nCntIcon*4,			//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-			NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+			D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+			nCntIcon*4,			//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 		);		
 	}
 
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	void UninitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+é–¢æ•°å:	void UninitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é–‹æ”¾é–¢æ•°
 *******************************************************************************/
 void UninitTitleMenu(void)
 {
@@ -165,34 +165,34 @@ void UninitTitleMenu(void)
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexTitleMenu(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_TITLE_MENU,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_TITLE_MENU,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferTitleMenu,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferTitleMenu,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferTitleMenu->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntIcon = 0; nCntIcon < MAX_TITLE_MENU; nCntIcon++,pVtx+=4)
 	{
 
-		//’¸“_À•W‚ÌÝ’è
+		//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_titleMenu[nCntIcon].pos.x - (g_titleMenu[nCntIcon].size.x/2), g_titleMenu[nCntIcon].pos.y - (g_titleMenu[nCntIcon].size.y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_titleMenu[nCntIcon].pos.x + (g_titleMenu[nCntIcon].size.x/2), g_titleMenu[nCntIcon].pos.y - (g_titleMenu[nCntIcon].size.y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_titleMenu[nCntIcon].pos.x - (g_titleMenu[nCntIcon].size.x/2), g_titleMenu[nCntIcon].pos.y + (g_titleMenu[nCntIcon].size.y/2), 0.0f);
@@ -212,7 +212,7 @@ HRESULT MakeVertexTitleMenu(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = g_titleMenu[nCntIcon].col;
 		pVtx[3].col = g_titleMenu[nCntIcon].col;
 
-		//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 		pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 		pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
@@ -270,10 +270,10 @@ void UpdateTitleMenu(void)
 
 void SetColorTitleMenu(int nMenuIdx, int R, int G, int B, int A)
 {
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferTitleMenu->Lock(0, 0, (void**)&pVtx, 0);
 
 	pVtx += nMenuIdx * NUM_VERTEX; 
@@ -284,7 +284,7 @@ void SetColorTitleMenu(int nMenuIdx, int R, int G, int B, int A)
 	pVtx[2].col = D3DCOLOR_RGBA(R,G,B,A);
 	pVtx[3].col = D3DCOLOR_RGBA(R,G,B,A);
 
-	// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pVtxBufferTitleMenu->Unlock();
 	
 }
@@ -292,21 +292,21 @@ void SetColorTitleMenu(int nMenuIdx, int R, int G, int B, int A)
 void SetVertexTitleMenu(int nMenuIdx)
 {
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferTitleMenu->Lock( 0, 0, (void**)&pVtx, 0);
 
 	pVtx += nMenuIdx * NUM_VERTEX; 
 
-	//’¸“_À•W‚ÌÝ’è
+	//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 	pVtx[0].pos = D3DXVECTOR3(g_titleMenu[nMenuIdx].pos.x - (g_titleMenu[nMenuIdx].size.x/2), g_titleMenu[nMenuIdx].pos.y - (g_titleMenu[nMenuIdx].size.y/2), 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(g_titleMenu[nMenuIdx].pos.x + (g_titleMenu[nMenuIdx].size.x/2), g_titleMenu[nMenuIdx].pos.y - (g_titleMenu[nMenuIdx].size.y/2), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(g_titleMenu[nMenuIdx].pos.x - (g_titleMenu[nMenuIdx].size.x/2), g_titleMenu[nMenuIdx].pos.y + (g_titleMenu[nMenuIdx].size.y/2), 0.0f);
 	pVtx[3].pos = D3DXVECTOR3(g_titleMenu[nMenuIdx].pos.x + (g_titleMenu[nMenuIdx].size.x/2), g_titleMenu[nMenuIdx].pos.y + (g_titleMenu[nMenuIdx].size.y/2), 0.0f);
 
-	// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pVtxBufferTitleMenu->Unlock();
 }
 

@@ -1,13 +1,13 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		”š’eˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	bullet.cpp
-// ì¬ŽÒ:			HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		çˆ†å¼¾å‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	bullet.cpp
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "bullet.h"
@@ -17,53 +17,53 @@
 #include "sound.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define	TEXTURE_POLYGON				"data/TEXTURE/bomb4.png"	// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	POLYGON_POS_X				(-100)							// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚wÀ•W)
-#define	POLYGON_POS_Y				(-100)							// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚xÀ•W)
-#define	POLYGON_SIZE_X				(50)							// ƒ|ƒŠƒSƒ“‚Ì•
-#define	POLYGON_SIZE_Y				(50)							// ƒ|ƒŠƒSƒ“‚Ì‚‚³
+#define	TEXTURE_POLYGON				"data/TEXTURE/bomb4.png"	// èª­ã¿è¾¼ã‚€ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ•ã‚¡ã‚¤ãƒ«å
+#define	POLYGON_POS_X				(-100)							// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¸åº§æ¨™)
+#define	POLYGON_POS_Y				(-100)							// ãƒãƒªã‚´ãƒ³ã®åŸºæº–ä½ç½®(ï¼¹åº§æ¨™)
+#define	POLYGON_SIZE_X				(50)							// ãƒãƒªã‚´ãƒ³ã®å¹…
+#define	POLYGON_SIZE_Y				(50)							// ãƒãƒªã‚´ãƒ³ã®é«˜ã•
 
-#define	TEX_PATTERN_DIVIDE_X		(4)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(1)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(4)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¸æ–¹å‘)
+#define	TEX_PATTERN_DIVIDE_Y		(1)								// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£å†…ã§ã®åˆ†å‰²æ•°(ï¼¹æ–¹å‘)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¸æ–¹å‘)(1.0f/Xæ–¹å‘åˆ†å‰²æ•°)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ï¼‘ãƒ‘ã‚¿ãƒ¼ãƒ³ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µã‚¤ã‚º(ï¼¹æ–¹å‘)(1.0f/Yæ–¹å‘åˆ†å‰²æ•°)
 
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-#define	TIME_CHANGE_PATTERN			(10)							// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®ãƒ‘ã‚¿ãƒ¼ãƒ³æ•°(Xæ–¹å‘åˆ†å‰²æ•°Ã—Yæ–¹å‘åˆ†å‰²æ•°)
+#define	TIME_CHANGE_PATTERN			(10)							// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆ‡ã‚Šæ›¿ã‚ã‚‹ã‚¿ã‚¤ãƒŸãƒ³ã‚°(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 
-#define	VALUE_MOVE					(0.0f)							// ƒ|ƒŠƒSƒ“‚ÌˆÚ“®—Ê
-#define COUNTDOWN					(120)							//”š”­‚ÌƒJƒ“ƒgƒ_ƒEƒ“(ƒtƒŒ[ƒ€”)
+#define	VALUE_MOVE					(0.0f)							// ãƒãƒªã‚´ãƒ³ã®ç§»å‹•é‡
+#define COUNTDOWN					(120)							//çˆ†ç™ºã®ã‚«ãƒ³ãƒˆãƒ€ã‚¦ãƒ³(ãƒ•ãƒ¬ãƒ¼ãƒ æ•°)
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexBullet(LPDIRECT3DDEVICE9 pDevice);
 void SetVertexBullet(int nCntBullet);
 void SetTextureBullet(int nCntBullet,int nPatternAnim);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferBullet = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureBullet = NULL;
 
-BULLET			g_bullet[MAX_BULLET]; //ƒvƒŒƒCƒ„[‚Ìƒ[ƒN
+BULLET			g_bullet[MAX_BULLET]; //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ãƒ¯ãƒ¼ã‚¯
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	‰Šú‰»ˆ—
+é–¢æ•°å:	HRESULT InitPolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	åˆæœŸåŒ–å‡¦ç†
 *******************************************************************************/
 HRESULT InitBullet(void)
 {
@@ -71,13 +71,13 @@ HRESULT InitBullet(void)
 
 	for(int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++)
 	{
-		//bullet‚Ì‰Šú‰»
+		//bulletã®åˆæœŸåŒ–
 		g_bullet[nCntBullet].pos = D3DXVECTOR3( POLYGON_POS_X, POLYGON_POS_Y, 0.0f);
 		g_bullet[nCntBullet].size = D3DXVECTOR3( POLYGON_SIZE_X, POLYGON_SIZE_Y, 0.0f);
 		g_bullet[nCntBullet].bUse = false;
 		g_bullet[nCntBullet].who_setted = -1;
 
-		// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‰Šú‰»
+		// ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ã®åˆæœŸåŒ–
 		g_bullet[nCntBullet].nCounterAnim = 0;
 		g_bullet[nCntBullet].nPatternAnim = 0;	
 		g_bullet[nCntBullet].nCounterExpo = COUNTDOWN;
@@ -85,38 +85,38 @@ HRESULT InitBullet(void)
 
 
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexBullet(pDevice)))
 	{
 		return E_FAIL;
 	}
 
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
-	D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-								TEXTURE_POLYGON,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-								&g_pTextureBullet);	// “Ç‚Ýž‚Þƒƒ‚ƒŠ[
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
+	D3DXCreateTextureFromFile(pDevice,					// ãƒ‡ãƒã‚¤ã‚¹ã¸ã®ãƒã‚¤ãƒ³ã‚¿
+								TEXTURE_POLYGON,		// ãƒ•ã‚¡ã‚¤ãƒ«ã®åå‰
+								&g_pTextureBullet);	// èª­ã¿è¾¼ã‚€ãƒ¡ãƒ¢ãƒªãƒ¼
 
 	return S_OK;
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void DrawPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+é–¢æ•°å:	void DrawPolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ãƒãƒªã‚´ãƒ³ã®æç”»é–¢æ•°
 *******************************************************************************/
 void DrawBullet(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferBullet, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 	pDevice->SetTexture(0, g_pTextureBullet);
 
 
@@ -124,11 +124,11 @@ void DrawBullet(void)
 	{
 		if(g_bullet[nCntBullet].bUse)
 		{
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//ãƒãƒªã‚´ãƒ³ã®æç”»
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-				nCntBullet*NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+				nCntBullet*NUM_VERTEX,	//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+				NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 			);
 		}
 	}
@@ -138,10 +138,10 @@ void DrawBullet(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void UninitPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+é–¢æ•°å:	void UninitPolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ãƒãƒªã‚´ãƒ³ã®é–‹æ”¾é–¢æ•°
 *******************************************************************************/
 void UninitBullet(void)
 {
@@ -158,28 +158,28 @@ void UninitBullet(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexBullet(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_BULLET,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_BULLET,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferBullet,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferBullet,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferBullet->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntBullet = 0; nCntBullet < MAX_BULLET; nCntBullet++, pVtx += NUM_VERTEX)
@@ -196,13 +196,13 @@ HRESULT MakeVertexBullet(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ’¸“_À•W‚ÌÝ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_bullet[nCntBullet].pos.x - (POLYGON_SIZE_X/2), g_bullet[nCntBullet].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_bullet[nCntBullet].pos.x + (POLYGON_SIZE_X/2), g_bullet[nCntBullet].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_bullet[nCntBullet].pos.x - (POLYGON_SIZE_X/2), g_bullet[nCntBullet].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_bullet[nCntBullet].pos.x + (POLYGON_SIZE_X/2), g_bullet[nCntBullet].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 
-		//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 		pVtx[0].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X) );
 		pVtx[1].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X + 1) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X));
 		pVtx[2].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X), TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X + 1));
@@ -216,10 +216,10 @@ HRESULT MakeVertexBullet(LPDIRECT3DDEVICE9 pDevice)
 
 
 /*******************************************************************************
-ŠÖ”–¼:	void UpdatePolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	XVˆ—
+é–¢æ•°å:	void UpdatePolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	æ›´æ–°å‡¦ç†
 *******************************************************************************/
 void UpdateBullet(void)
 {
@@ -229,10 +229,10 @@ void UpdateBullet(void)
 	{
 		if(g_bullet[nCntBullet].bUse)
 		{
-			//’¸“_À•W‚ÌÝ’è
+			//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 			//SetVertexBullet(nCntBullet);
 
-			//”š’e‚ÌƒJƒEƒ“ƒgƒ_ƒEƒ“
+			//çˆ†å¼¾ã®ã‚«ã‚¦ãƒ³ãƒˆãƒ€ã‚¦ãƒ³
 			g_bullet[nCntBullet].nCounterExpo--;
 			if(g_bullet[nCntBullet].nCounterExpo == 0)
 			{
@@ -246,13 +246,13 @@ void UpdateBullet(void)
 			if((g_bullet[nCntBullet].nCounterAnim % TIME_CHANGE_PATTERN) == 0)
 			{
 
-				// ƒpƒ^[ƒ“‚ÌØ‚è‘Ö‚¦
+				// ãƒ‘ã‚¿ãƒ¼ãƒ³ã®åˆ‡ã‚Šæ›¿ãˆ
 				g_bullet[nCntBullet].nPatternAnim = (g_bullet[nCntBullet].nPatternAnim + 1) % NUM_ANIM_PATTERN;
 
-				// ƒeƒNƒXƒ`ƒƒÀ•W‚ðÝ’è
+				// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã‚’è¨­å®š
 				SetTextureBullet(nCntBullet,g_bullet[nCntBullet].nPatternAnim);
 			
-				//g_nCounterAnim‚ÌƒŠƒZƒbƒg
+				//g_nCounterAnimã®ãƒªã‚»ãƒƒãƒˆ
 				g_bullet[nCntBullet].nCounterAnim = 0;
 			}
 
@@ -261,22 +261,22 @@ void UpdateBullet(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetVertexPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	’¸“_À•W‚ÌÝ’è
+é–¢æ•°å:	void SetVertexPolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 *******************************************************************************/
 void SetVertexBullet(int nCntBullet)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pVtxBufferBullet->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += nCntBullet * NUM_VERTEX; 
 
-		// ’¸“_À•W‚ÌÝ’è
+		// é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_bullet[nCntBullet].pos.x - (POLYGON_SIZE_X/2), g_bullet[nCntBullet].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_bullet[nCntBullet].pos.x + (POLYGON_SIZE_X/2), g_bullet[nCntBullet].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_bullet[nCntBullet].pos.x - (POLYGON_SIZE_X/2), g_bullet[nCntBullet].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
@@ -284,30 +284,30 @@ void SetVertexBullet(int nCntBullet)
 		
 		
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pVtxBufferBullet->Unlock();
 	}
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetTexturePolygon(int nPatternAnim)
-ˆø”:	int nPatternAnim : ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“No.
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒeƒNƒXƒ`ƒƒÀ•W‚ÌÝ’è
+é–¢æ•°å:	void SetTexturePolygon(int nPatternAnim)
+å¼•æ•°:	int nPatternAnim : ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãƒ‘ã‚¿ãƒ¼ãƒ³No.
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 *******************************************************************************/
 void SetTextureBullet(int nCntBullet,int nPatternAnim)
 {
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 	float fPosXLeft, fPosXRight;
 	float fPosYUp, fPosYDown;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferBullet->Lock(0, 0, (void**)&pVtx, 0);
 
 	pVtx += nCntBullet*NUM_VERTEX;
 
-	// ƒeƒNƒXƒ`ƒƒÀ•W‚ÌÝ’è
+	// ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™ã®è¨­å®š
 	fPosXLeft	= TEX_PATTERN_SIZE_X * (nPatternAnim % TEX_PATTERN_DIVIDE_X);
 	fPosXRight	= TEX_PATTERN_SIZE_X * (nPatternAnim % TEX_PATTERN_DIVIDE_X + 1);
 	fPosYUp		= TEX_PATTERN_SIZE_Y * (nPatternAnim / TEX_PATTERN_DIVIDE_X);
@@ -319,16 +319,16 @@ void SetTextureBullet(int nCntBullet,int nPatternAnim)
 	pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
 	pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
 
-	// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+	// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 	g_pVtxBufferBullet->Unlock();
 
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetBullet(D3DXVECTOR3 pos)
-ˆø”:	D3DXVECTOR3 posF’e‚ðÝ’u‚·‚éˆÊ’u
-–ß‚è’l:	‚È‚µ
-à–¾:	’e‚ÌÝ’u
+é–¢æ•°å:	void SetBullet(D3DXVECTOR3 pos)
+å¼•æ•°:	D3DXVECTOR3 posï¼šå¼¾ã‚’è¨­ç½®ã™ã‚‹ä½ç½®
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	å¼¾ã®è¨­ç½®
 *******************************************************************************/
 void SetBullet(int nPlayerIdx, D3DXVECTOR3 pos, int power)
 {
@@ -339,14 +339,14 @@ void SetBullet(int nPlayerIdx, D3DXVECTOR3 pos, int power)
 	{
 		if(!g_bullet[nCntBullet].bUse) 
 		{
-			//ˆÊ’u‚ðÝ’è			
+			//ä½ç½®ã‚’è¨­å®š			
 			g_bullet[nCntBullet].pos = pos;
 			g_bullet[nCntBullet].power = power;
 			SetVertexBullet(nCntBullet);
-			g_bullet[nCntBullet].bUse = true; //”­ŽË’†‚É•ÏX
+			g_bullet[nCntBullet].bUse = true; //ç™ºå°„ä¸­ã«å¤‰æ›´
 			g_bullet[nCntBullet].who_setted = nPlayerIdx;
 
-			//item map‚É‹L˜^
+			//item mapã«è¨˜éŒ²
 			pMap->item[(int)Pos2DotPos(pos).y][(int)Pos2DotPos(pos).x].index = nCntBullet;
 			pMap->item[(int)Pos2DotPos(pos).y][(int)Pos2DotPos(pos).x].type = ITEM_SETTED_BOMB;
 			pMap->item[(int)Pos2DotPos(pos).y][(int)Pos2DotPos(pos).x].pos = pos;
@@ -357,10 +357,10 @@ void SetBullet(int nPlayerIdx, D3DXVECTOR3 pos, int power)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	BULLET* GetBullet(void)
-ˆø”:	‚È‚µ
-–ß‚è’l: BULLET*FBULLET‚Ìƒ|ƒCƒ“ƒ^
-à–¾:	“–‚½‚è”»’è‚È‚Ç‚ÌŽžA’e‚Ìî•ñ‚ð“Ç‚ÝŽæ‚è
+é–¢æ•°å:	BULLET* GetBullet(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤: BULLET*ï¼šBULLETã®ãƒã‚¤ãƒ³ã‚¿
+èª¬æ˜Ž:	å½“ãŸã‚Šåˆ¤å®šãªã©ã®æ™‚ã€å¼¾ã®æƒ…å ±ã‚’èª­ã¿å–ã‚Š
 *******************************************************************************/
 BULLET *GetBullet(void)
 {

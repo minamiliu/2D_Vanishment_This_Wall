@@ -1,14 +1,14 @@
-//******************************************************************************
+ï»¿//******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		ƒLƒƒƒ‰‘I‘ð‚Ì‘I‚Ôˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	CS_select.cpp
-// ì¬ŽÒ:			HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+// ã‚¿ã‚¤ãƒˆãƒ«:		ã‚­ãƒ£ãƒ©é¸æŠžã®é¸ã¶å‡¦ç†
+// ãƒ—ãƒ­ã‚°ãƒ©ãƒ å:	CS_select.cpp
+// ä½œæˆè€…:			HALæ±äº¬ã‚²ãƒ¼ãƒ å­¦ç§‘ã€€åŠ‰å—å®
 //
 //******************************************************************************
 
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ãƒ•ã‚¡ã‚¤ãƒ«
 *******************************************************************************/
 
 #include "input.h"
@@ -19,7 +19,7 @@
 #include "sound.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ãƒžã‚¯ãƒ­å®šç¾©
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
@@ -35,17 +35,17 @@
 #define POLYGON_TEXTURENAME_CS_ALLREADY		"data/TEXTURE/CHARACTER SELECT/CS_AreYouReady.png"
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* æ§‹é€ ä½“å®šç¾©
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ãƒ—ãƒ­ãƒˆã‚¿ã‚¤ãƒ—å®£è¨€
 *******************************************************************************/
 HRESULT MakeVertexCS_Select(LPDIRECT3DDEVICE9 pDevice);
 void SetVertexPlayerIcon(int nPlayerIdx, ICON_TYPE type);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ã‚°ãƒ­ãƒ¼ãƒãƒ«å¤‰æ•°
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferCS_Select = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureCS_Select[MAX_OBJECT] = {NULL};
@@ -61,16 +61,16 @@ PICTURE_CHARACTOER g_charaList[MAX_PLAYER];
 bool g_charaSetted;
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ì‰Šú‰»ˆ—
+é–¢æ•°å:	HRESULT InitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	èƒŒæ™¯ã®åˆæœŸåŒ–å‡¦ç†
 *******************************************************************************/
 HRESULT InitCS_Select(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//”ª‚Â‚ÌCharacter IconˆÊ’u
+	//å…«ã¤ã®Character Iconä½ç½®
 	g_iconPos[0][0] = D3DXVECTOR3( 490, 200, 0.0f);
 	g_iconPos[1][0] = D3DXVECTOR3( 490, 330, 0.0f);
 	g_iconPos[2][0] = D3DXVECTOR3( 490, 460, 0.0f);
@@ -184,13 +184,13 @@ HRESULT InitCS_Select(void)
 	g_allReadyIcon.size = D3DXVECTOR3( 400, 200, 0.0f);
 	g_allReadyIcon.type = PICTURE_ALLREADY;
 
-	//’¸“_î•ñ‚Ìì¬
+	//é ‚ç‚¹æƒ…å ±ã®ä½œæˆ
 	if(FAILED(MakeVertexCS_Select(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	//ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®èª­ã¿è¾¼ã¿
 	D3DXCreateTextureFromFile( pDevice,POLYGON_TEXTURENAME_CS_1P		, &g_pTextureCS_Select[PICTURE_1P]);
 	D3DXCreateTextureFromFile( pDevice,POLYGON_TEXTURENAME_CS_2P		, &g_pTextureCS_Select[PICTURE_2P]);
 	D3DXCreateTextureFromFile( pDevice,POLYGON_TEXTURENAME_CS_3P		, &g_pTextureCS_Select[PICTURE_3P]);
@@ -202,20 +202,20 @@ HRESULT InitCS_Select(void)
 	return S_OK;
 }
 /*******************************************************************************
-ŠÖ”–¼:	void DrawBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+é–¢æ•°å:	void DrawBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®æç”»é–¢æ•°
 *******************************************************************************/
 void DrawCS_Select(void)
 {
 
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚’ãƒ‡ãƒã‚¤ã‚¹ã®ãƒ‡ãƒ¼ã‚¿ã‚¹ãƒˆãƒªãƒ¼ãƒ ã«ãƒã‚¤ãƒ³ãƒ‰
 	pDevice->SetStreamSource(0, g_pVtxBufferCS_Select, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆã®è¨­å®š
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
 
@@ -225,14 +225,14 @@ void DrawCS_Select(void)
 		{
 			if(g_playerIcon[nCntPlayer][nCntIcon].bUse)
 			{
-				//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+				//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 				pDevice->SetTexture(0, g_pTextureCS_Select[g_playerIcon[nCntPlayer][nCntIcon].type]);
 
-				//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+				//ãƒãƒªã‚´ãƒ³ã®æç”»
 				pDevice->DrawPrimitive(
-					D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-					(nCntPlayer*MAX_ICON_TYPE + nCntIcon)*4,			//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-					NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+					D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+					(nCntPlayer*MAX_ICON_TYPE + nCntIcon)*4,			//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+					NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 				);			
 			}
 		}
@@ -241,24 +241,24 @@ void DrawCS_Select(void)
 	// all ready
 	if(g_allReadyIcon.bUse)
 	{
-		//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+		//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã®è¨­å®š
 		pDevice->SetTexture(0, g_pTextureCS_Select[PICTURE_ALLREADY]);
 
-		//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+		//ãƒãƒªã‚´ãƒ³ã®æç”»
 		pDevice->DrawPrimitive(
-			D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-			(MAX_OBJECT- 1)*4,			//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-			NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+			D3DPT_TRIANGLESTRIP,	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–ã®ç¨®é¡ž
+			(MAX_OBJECT- 1)*4,			//ãƒ­ãƒ¼ãƒ‰ã™ã‚‹æœ€åˆã®é ‚ç‚¹ã‚¤ãƒ³ãƒ‡ãƒƒã‚¯ã‚¹
+			NUM_POLYGON				//ãƒãƒªã‚´ãƒ³ã®æ•°
 		);		
 	}
 
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	void UninitBG(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+é–¢æ•°å:	void UninitBG(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é–‹æ”¾é–¢æ•°
 *******************************************************************************/
 void UninitCS_Select(void)
 {
@@ -280,28 +280,28 @@ void UninitCS_Select(void)
 
 }
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	”wŒi‚Ìƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+é–¢æ•°å:	HRESULT MakeVertexPolygon(LPDIRECT3DDEVICE9 pDevice)
+å¼•æ•°:	LPDIRECT3DDEVICE9 pDevice : Deviceã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+æˆ»ã‚Šå€¤:	HRESUL : åˆæœŸåŒ–çµæžœ æ­£å¸¸çµ‚äº†:S_OK
+èª¬æ˜Ž:	èƒŒæ™¯ã®ãƒãƒªã‚´ãƒ³ã®é ‚ç‚¹æƒ…å ±ã®ä½œæˆé–¢æ•°
 *******************************************************************************/
 HRESULT MakeVertexCS_Select(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_OBJECT,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_OBJECT,	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ãƒãƒƒãƒ•ã‚¡ã‚µã‚¤ã‚º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//é ‚ç‚¹ãƒ•ã‚©ãƒ¼ãƒžãƒƒãƒˆ
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferCS_Select,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferCS_Select,			//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ•ã‚§ãƒ¼ã‚¹ã®ãƒã‚¤ãƒ³ã‚¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 	g_pVtxBufferCS_Select->Lock( 0, 0, (void**)&pVtx, 0);
 
 
@@ -309,7 +309,7 @@ HRESULT MakeVertexCS_Select(LPDIRECT3DDEVICE9 pDevice)
 	{
 		for(int nCntIcon = 0; nCntIcon < MAX_ICON_TYPE; nCntIcon++)
 		{
-			//’¸“_À•W‚ÌÝ’è
+			//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 			pVtx[0].pos = D3DXVECTOR3(g_playerIcon[nCntPlayer][nCntIcon].pos.x, g_playerIcon[nCntPlayer][nCntIcon].pos.y, 0.0f);
 			pVtx[1].pos = D3DXVECTOR3(g_playerIcon[nCntPlayer][nCntIcon].pos.x + g_playerIcon[nCntPlayer][nCntIcon].size.x, g_playerIcon[nCntPlayer][nCntIcon].pos.y, 0.0f);
 			pVtx[2].pos = D3DXVECTOR3(g_playerIcon[nCntPlayer][nCntIcon].pos.x, g_playerIcon[nCntPlayer][nCntIcon].pos.y + g_playerIcon[nCntPlayer][nCntIcon].size.y, 0.0f);
@@ -329,7 +329,7 @@ HRESULT MakeVertexCS_Select(LPDIRECT3DDEVICE9 pDevice)
 			pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 			pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-			//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+			//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 			pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 			pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 			pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
@@ -340,7 +340,7 @@ HRESULT MakeVertexCS_Select(LPDIRECT3DDEVICE9 pDevice)
 	}
 
 	//all ready icon
-	//’¸“_À•W‚ÌÝ’è
+	//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 	pVtx[0].pos = D3DXVECTOR3(g_allReadyIcon.pos.x - (g_allReadyIcon.size.x/2), g_allReadyIcon.pos.y - (g_allReadyIcon.size.y/2), 0.0f);
 	pVtx[1].pos = D3DXVECTOR3(g_allReadyIcon.pos.x + (g_allReadyIcon.size.x/2), g_allReadyIcon.pos.y - (g_allReadyIcon.size.y/2), 0.0f);
 	pVtx[2].pos = D3DXVECTOR3(g_allReadyIcon.pos.x - (g_allReadyIcon.size.x/2), g_allReadyIcon.pos.y + (g_allReadyIcon.size.y/2), 0.0f);
@@ -360,7 +360,7 @@ HRESULT MakeVertexCS_Select(LPDIRECT3DDEVICE9 pDevice)
 	pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 	pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-	//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åº§æ¨™æŒ‡å®š
 	pVtx[0].tex = D3DXVECTOR2(0.0F, 0.0F);
 	pVtx[1].tex = D3DXVECTOR2(1.0F, 0.0F);
 	pVtx[2].tex = D3DXVECTOR2(0.0F, 1.0F);
@@ -378,7 +378,7 @@ void UpdateCS_Select(void)
 
 	//Player controller setting
 	int keyOfPlayer[MAX_PLAYER][5] = { 
-		{DIK_DOWN, DIK_LEFT, DIK_RIGHT, DIK_UP, DIK_RETURN}, // ‰º ¶ ‰E ã attack
+		{DIK_DOWN, DIK_LEFT, DIK_RIGHT, DIK_UP, DIK_RETURN}, // ä¸‹ å·¦ å³ ä¸Š attack
 		{DIK_S, DIK_A, DIK_D, DIK_W, DIK_TAB},
 		{DIK_J, DIK_H, DIK_K, DIK_U, DIK_SPACE},
 		{DIK_NUMPAD5, DIK_NUMPAD4, DIK_NUMPAD6, DIK_NUMPAD8, DIK_NUMPAD0}};
@@ -513,28 +513,28 @@ void UpdateCS_Select(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetVertexPolygon(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	’¸“_À•W‚ÌÝ’è
+é–¢æ•°å:	void SetVertexPolygon(void)
+å¼•æ•°:	ãªã—
+æˆ»ã‚Šå€¤:	ãªã—
+èª¬æ˜Ž:	é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 *******************************************************************************/
 void SetVertexPlayerIcon(int nPlayerIdx, ICON_TYPE type)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ä¸­èº«ã‚’åŸ‹ã‚ã‚‹
 		VERTEX_2D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ç¯„å›²ã‚’ãƒ­ãƒƒã‚¯ã—ã€é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã¸ã®ãƒã‚¤ãƒ³ã‚¿ã‚’å–å¾—
 		g_pVtxBufferCS_Select->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += (nPlayerIdx*MAX_ICON_TYPE + type) * NUM_VERTEX; 
 
-		//’¸“_À•W‚ÌÝ’è
+		//é ‚ç‚¹åº§æ¨™ã®è¨­å®š
 		pVtx[0].pos = D3DXVECTOR3(g_playerIcon[nPlayerIdx][type].pos.x, g_playerIcon[nPlayerIdx][type].pos.y, 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_playerIcon[nPlayerIdx][type].pos.x + g_playerIcon[nPlayerIdx][type].size.x, g_playerIcon[nPlayerIdx][type].pos.y, 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_playerIcon[nPlayerIdx][type].pos.x, g_playerIcon[nPlayerIdx][type].pos.y + g_playerIcon[nPlayerIdx][type].size.y, 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_playerIcon[nPlayerIdx][type].pos.x + g_playerIcon[nPlayerIdx][type].size.x, g_playerIcon[nPlayerIdx][type].pos.y + g_playerIcon[nPlayerIdx][type].size.y, 0.0f);
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã‚’ã‚¢ãƒ³ãƒ­ãƒƒã‚¯ã™ã‚‹
 		g_pVtxBufferCS_Select->Unlock();
 	}
 }

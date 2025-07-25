@@ -1,13 +1,13 @@
 //******************************************************************************
 //
-// ƒ^ƒCƒgƒ‹:		‹¦—Íƒ‚[ƒh‚Ìƒ{ƒXˆ—
-// ƒvƒƒOƒ‰ƒ€–¼:	boss.cpp
-// ì¬ŽÒ:			HAL“Œ‹žƒQ[ƒ€Šw‰È@—«“ìG
+// ¥¿¥¤¥È¥ë:		¶¨ÎÏ¥â¡¼¥É¤Î¥Ü¥¹½èÍý
+// ¥×¥í¥°¥é¥àÌ¾:	boss.cpp
+// ºîÀ®¼Ô:			HALÅìµþ¥²¡¼¥à³Ø²Ê¡¡Î­Æî¹¨
 //
 //******************************************************************************
 
 /*******************************************************************************
-* ƒCƒ“ƒNƒ‹[ƒhƒtƒ@ƒCƒ‹
+* ¥¤¥ó¥¯¥ë¡¼¥É¥Õ¥¡¥¤¥ë
 *******************************************************************************/
 
 #include "boss.h"
@@ -19,55 +19,55 @@
 #include "game.h"
 
 //*****************************************************************************
-// ƒ}ƒNƒ’è‹`
+// ¥Þ¥¯¥íÄêµÁ
 //*****************************************************************************
 #define NUM_VERTEX (4)
 #define NUM_POLYGON (2)
 
-#define	TEXTURE_POLYGON				"data/TEXTURE/boss0001.png"		// “Ç‚Ýž‚ÞƒeƒNƒXƒ`ƒƒƒtƒ@ƒCƒ‹–¼
-#define	POLYGON_DOTPOS_X			(0)								// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚wÀ•W)
-#define	POLYGON_DOTPOS_Y			(0)								// ƒ|ƒŠƒSƒ“‚ÌŠî€ˆÊ’u(‚xÀ•W)
-#define	POLYGON_SIZE_X				(400.0f)							// ƒ|ƒŠƒSƒ“‚Ì•
-#define	POLYGON_SIZE_Y				(400.0f)							// ƒ|ƒŠƒSƒ“‚Ì‚‚³
+#define	TEXTURE_POLYGON				"data/TEXTURE/boss0001.png"		// ÆÉ¤ß¹þ¤à¥Æ¥¯¥¹¥Á¥ã¥Õ¥¡¥¤¥ëÌ¾
+#define	POLYGON_DOTPOS_X			(0)								// ¥Ý¥ê¥´¥ó¤Î´ð½à°ÌÃÖ(£ØºÂÉ¸)
+#define	POLYGON_DOTPOS_Y			(0)								// ¥Ý¥ê¥´¥ó¤Î´ð½à°ÌÃÖ(£ÙºÂÉ¸)
+#define	POLYGON_SIZE_X				(400.0f)							// ¥Ý¥ê¥´¥ó¤ÎÉý
+#define	POLYGON_SIZE_Y				(400.0f)							// ¥Ý¥ê¥´¥ó¤Î¹â¤µ
 
-#define	TEX_PATTERN_DIVIDE_X		(3)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚w•ûŒü)
-#define	TEX_PATTERN_DIVIDE_Y		(4)								// ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒ“à‚Å‚Ì•ªŠ„”(‚x•ûŒü)
+#define	TEX_PATTERN_DIVIDE_X		(3)								// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¥Ñ¥¿¡¼¥ó¤Î¥Æ¥¯¥¹¥Á¥ãÆâ¤Ç¤ÎÊ¬³ä¿ô(£ØÊý¸þ)
+#define	TEX_PATTERN_DIVIDE_Y		(4)								// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¥Ñ¥¿¡¼¥ó¤Î¥Æ¥¯¥¹¥Á¥ãÆâ¤Ç¤ÎÊ¬³ä¿ô(£ÙÊý¸þ)
 
-#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚w•ûŒü)(1.0f/X•ûŒü•ªŠ„”)
-#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// ‚Pƒpƒ^[ƒ“‚ÌƒeƒNƒXƒ`ƒƒƒTƒCƒY(‚x•ûŒü)(1.0f/Y•ûŒü•ªŠ„”)
+#define	TEX_PATTERN_SIZE_X			(1.0f/TEX_PATTERN_DIVIDE_X)		// £±¥Ñ¥¿¡¼¥ó¤Î¥Æ¥¯¥¹¥Á¥ã¥µ¥¤¥º(£ØÊý¸þ)(1.0f/XÊý¸þÊ¬³ä¿ô)
+#define	TEX_PATTERN_SIZE_Y			(1.0f/TEX_PATTERN_DIVIDE_Y)		// £±¥Ñ¥¿¡¼¥ó¤Î¥Æ¥¯¥¹¥Á¥ã¥µ¥¤¥º(£ÙÊý¸þ)(1.0f/YÊý¸þÊ¬³ä¿ô)
 
-#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ìƒpƒ^[ƒ“”(X•ûŒü•ªŠ„”~Y•ûŒü•ªŠ„”)
-#define	TIME_CHANGE_PATTERN			(10)							// ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌØ‚è‘Ö‚í‚éƒ^ƒCƒ~ƒ“ƒO(ƒtƒŒ[ƒ€”)
+#define	NUM_ANIM_PATTERN			(TEX_PATTERN_DIVIDE_X*TEX_PATTERN_DIVIDE_Y)	// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¤Î¥Ñ¥¿¡¼¥ó¿ô(XÊý¸þÊ¬³ä¿ô¡ßYÊý¸þÊ¬³ä¿ô)
+#define	TIME_CHANGE_PATTERN			(10)							// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¤ÎÀÚ¤êÂØ¤ï¤ë¥¿¥¤¥ß¥ó¥°(¥Õ¥ì¡¼¥à¿ô)
 
-#define	VALUE_MOVE					(1.0f)							// ƒ|ƒŠƒSƒ“‚ÌˆÚ“®—Ê
+#define	VALUE_MOVE					(1.0f)							// ¥Ý¥ê¥´¥ó¤Î°ÜÆ°ÎÌ
 
 
 
 /*******************************************************************************
-* \‘¢‘Ì’è‹`
+* ¹½Â¤ÂÎÄêµÁ
 *******************************************************************************/
 
 /*******************************************************************************
-* ƒvƒƒgƒ^ƒCƒvéŒ¾
+* ¥×¥í¥È¥¿¥¤¥×Àë¸À
 *******************************************************************************/
 HRESULT MakeVertexBoss(LPDIRECT3DDEVICE9 pDevice);
 void SetTextureBoss(int nCntBoss, int nPatternAnim, DIRECTION dir);
 void SetVertexBoss(int nCntBoss);
 
 /*******************************************************************************
-* ƒOƒ[ƒoƒ‹•Ï”
+* ¥°¥í¡¼¥Ð¥ëÊÑ¿ô
 *******************************************************************************/
 LPDIRECT3DVERTEXBUFFER9 g_pVtxBufferBoss = NULL;
 LPDIRECT3DTEXTURE9 g_pTextureBoss = NULL;
 
-BOSS	g_boss[MAX_BOSS]; //ƒvƒŒƒCƒ„[‚Ìƒ[ƒN
+BOSS	g_boss[MAX_BOSS]; //¥×¥ì¥¤¥ä¡¼¤Î¥ï¡¼¥¯
 bool hurt_flag;
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT InitEnemy(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	‰Šú‰»ˆ—
+´Ø¿ôÌ¾:	HRESULT InitEnemy(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	HRESUL : ½é´ü²½·ë²Ì Àµ¾ï½ªÎ»:S_OK
+ÀâÌÀ:	½é´ü²½½èÍý
 *******************************************************************************/
 HRESULT InitBoss(void)
 {
@@ -77,7 +77,7 @@ HRESULT InitBoss(void)
 
 	for(int nCntBoss = 0; nCntBoss < MAX_BOSS; nCntBoss++)
 	{
-		//enemy‚Ì‰Šú‰»
+		//enemy¤Î½é´ü²½
 		int randX, randY;
 		do
 		{
@@ -105,52 +105,52 @@ HRESULT InitBoss(void)
 		g_boss[0].bUse = true;
 	}
 
-	// ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‰Šú‰»
+	// ¥¢¥Ë¥á¡¼¥·¥ç¥ó¤Î½é´ü²½
 	hurt_flag = false;
 
 
-	//’¸“_î•ñ‚Ìì¬
+	//ÄºÅÀ¾ðÊó¤ÎºîÀ®
 	if(FAILED(MakeVertexBoss(pDevice)))
 	{
 		return E_FAIL;
 	}
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚Ýž‚Ý
-	D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-								TEXTURE_POLYGON,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-								&g_pTextureBoss);	// “Ç‚Ýž‚Þƒƒ‚ƒŠ[
+	// ¥Æ¥¯¥¹¥Á¥ã¤ÎÆÉ¤ß¹þ¤ß
+	D3DXCreateTextureFromFile(pDevice,					// ¥Ç¥Ð¥¤¥¹¤Ø¤Î¥Ý¥¤¥ó¥¿
+								TEXTURE_POLYGON,		// ¥Õ¥¡¥¤¥ë¤ÎÌ¾Á°
+								&g_pTextureBoss);	// ÆÉ¤ß¹þ¤à¥á¥â¥ê¡¼
 
 	return S_OK;
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void DrawEnemy(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì•`‰æŠÖ”
+´Ø¿ôÌ¾:	void DrawEnemy(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	¥Ý¥ê¥´¥ó¤ÎÉÁ²è´Ø¿ô
 *******************************************************************************/
 void DrawBoss(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	//’¸“_ƒoƒbƒtƒ@‚ðƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+	//ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤ò¥Ç¥Ð¥¤¥¹¤Î¥Ç¡¼¥¿¥¹¥È¥ê¡¼¥à¤Ë¥Ð¥¤¥ó¥É
 	pDevice->SetStreamSource(0, g_pVtxBufferBoss, 0, sizeof(VERTEX_2D));
 
-	//’¸“_ƒtƒH[ƒ}ƒbƒg‚ÌÝ’è
+	//ÄºÅÀ¥Õ¥©¡¼¥Þ¥Ã¥È¤ÎÀßÄê
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	//ƒeƒNƒXƒ`ƒƒ‚ÌÝ’è
+	//¥Æ¥¯¥¹¥Á¥ã¤ÎÀßÄê
 	pDevice->SetTexture(0, g_pTextureBoss);
 
 	for(int nCntBoss = 0; nCntBoss < MAX_BOSS; nCntBoss++)
 	{
 		if(g_boss[nCntBoss].bUse)
 		{
-			//ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			//¥Ý¥ê¥´¥ó¤ÎÉÁ²è
 			pDevice->DrawPrimitive(
-				D3DPT_TRIANGLESTRIP,	//ƒvƒŠƒ~ƒeƒBƒu‚ÌŽí—Þ
-				nCntBoss*NUM_VERTEX,	//ƒ[ƒh‚·‚éÅ‰‚Ì’¸“_ƒCƒ“ƒfƒbƒNƒX
-				NUM_POLYGON				//ƒ|ƒŠƒSƒ“‚Ì”
+				D3DPT_TRIANGLESTRIP,	//¥×¥ê¥ß¥Æ¥£¥Ö¤Î¼ïÎà
+				nCntBoss*NUM_VERTEX,	//¥í¡¼¥É¤¹¤ëºÇ½é¤ÎÄºÅÀ¥¤¥ó¥Ç¥Ã¥¯¥¹
+				NUM_POLYGON				//¥Ý¥ê¥´¥ó¤Î¿ô
 			);
 		}	
 	}
@@ -160,10 +160,10 @@ void DrawBoss(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void UninitEnemy(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒ|ƒŠƒSƒ“‚ÌŠJ•úŠÖ”
+´Ø¿ôÌ¾:	void UninitEnemy(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	¥Ý¥ê¥´¥ó¤Î³«Êü´Ø¿ô
 *******************************************************************************/
 void UninitBoss(void)
 {
@@ -178,7 +178,7 @@ void UninitBoss(void)
 		g_pVtxBufferBoss = NULL;
 	}
 
-	//BOSS‚ð—˜—p‚µ‚È‚¢‚ÉÝ’è‚·‚é
+	//BOSS¤òÍøÍÑ¤·¤Ê¤¤¤ËÀßÄê¤¹¤ë
 	for(int nCntBoss = 0; nCntBoss < MAX_BOSS; nCntBoss++)
 	{
 		g_boss[nCntBoss].bUse = false;	
@@ -187,29 +187,29 @@ void UninitBoss(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	HRESULT MakeVertexEnemy(LPDIRECT3DDEVICE9 pDevice)
-ˆø”:	LPDIRECT3DDEVICE9 pDevice : DeviceƒIƒuƒWƒFƒNƒg
-–ß‚è’l:	HRESUL : ‰Šú‰»Œ‹‰Ê ³íI—¹:S_OK
-à–¾:	ƒ|ƒŠƒSƒ“‚Ì’¸“_î•ñ‚Ìì¬ŠÖ”
+´Ø¿ôÌ¾:	HRESULT MakeVertexEnemy(LPDIRECT3DDEVICE9 pDevice)
+°ú¿ô:	LPDIRECT3DDEVICE9 pDevice : Device¥ª¥Ö¥¸¥§¥¯¥È
+Ìá¤êÃÍ:	HRESUL : ½é´ü²½·ë²Ì Àµ¾ï½ªÎ»:S_OK
+ÀâÌÀ:	¥Ý¥ê¥´¥ó¤ÎÄºÅÀ¾ðÊó¤ÎºîÀ®´Ø¿ô
 *******************************************************************************/
 HRESULT MakeVertexBoss(LPDIRECT3DDEVICE9 pDevice)
 {
 	if(FAILED(pDevice->CreateVertexBuffer(
-		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_BOSS,	//’¸“_ƒf[ƒ^‚Ìƒoƒbƒtƒ@ƒTƒCƒY 
+		sizeof(VERTEX_2D)*NUM_VERTEX*MAX_BOSS,	//ÄºÅÀ¥Ç¡¼¥¿¤Î¥Ð¥Ã¥Õ¥¡¥µ¥¤¥º 
 		D3DUSAGE_WRITEONLY, 
-		FVF_VERTEX_2D,					//’¸“_ƒtƒH[ƒ}ƒbƒg
+		FVF_VERTEX_2D,					//ÄºÅÀ¥Õ¥©¡¼¥Þ¥Ã¥È
 		D3DPOOL_MANAGED, 
-		&g_pVtxBufferBoss,			//’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ìƒ|ƒCƒ“ƒ^
+		&g_pVtxBufferBoss,			//ÄºÅÀ¥Ð¥Ã¥Õ¥¡¥¤¥ó¥¿¡¼¥Õ¥§¡¼¥¹¤Î¥Ý¥¤¥ó¥¿
 		NULL)))
 	{
 		return E_FAIL;
 	}
 
 
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤ÎÃæ¿È¤òËä¤á¤ë
 	VERTEX_2D *pVtx;
 
-	//’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	//ÄºÅÀ¥Ç¡¼¥¿¤ÎÈÏ°Ï¤ò¥í¥Ã¥¯¤·¡¢ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤Ø¤Î¥Ý¥¤¥ó¥¿¤ò¼èÆÀ
 	g_pVtxBufferBoss->Lock( 0, 0, (void**)&pVtx, 0);
 
 	for(int nCntBoss = 0; nCntBoss < MAX_BOSS; nCntBoss++, pVtx += NUM_VERTEX)
@@ -227,14 +227,14 @@ HRESULT MakeVertexBoss(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].col = D3DCOLOR_RGBA(255,255,255,255);
 		pVtx[3].col = D3DCOLOR_RGBA(255,255,255,255);
 
-		// ’¸“_À•W‚ÌÝ’è
+		// ÄºÅÀºÂÉ¸¤ÎÀßÄê
 		pVtx[0].pos = D3DXVECTOR3(g_boss[nCntBoss].pos.x - (POLYGON_SIZE_X/2), g_boss[nCntBoss].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_boss[nCntBoss].pos.x + (POLYGON_SIZE_X/2), g_boss[nCntBoss].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_boss[nCntBoss].pos.x - (POLYGON_SIZE_X/2), g_boss[nCntBoss].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_boss[nCntBoss].pos.x + (POLYGON_SIZE_X/2), g_boss[nCntBoss].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 
 
-		//ƒeƒNƒXƒ`ƒƒÀ•WŽw’è
+		//¥Æ¥¯¥¹¥Á¥ãºÂÉ¸»ØÄê
 		pVtx[0].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X) );
 		pVtx[1].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X + 1) , TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X));
 		pVtx[2].tex = D3DXVECTOR2( TEX_PATTERN_SIZE_X * (0 % TEX_PATTERN_DIVIDE_X), TEX_PATTERN_SIZE_Y * (0 / TEX_PATTERN_DIVIDE_X + 1));
@@ -251,10 +251,10 @@ HRESULT MakeVertexBoss(LPDIRECT3DDEVICE9 pDevice)
 
 
 /*******************************************************************************
-ŠÖ”–¼:	void UpdateEnemy(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	XVˆ—
+´Ø¿ôÌ¾:	void UpdateEnemy(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	¹¹¿·½èÍý
 *******************************************************************************/
 void UpdateBoss(void)
 {	
@@ -267,20 +267,20 @@ void UpdateBoss(void)
 		if(g_boss[nCntBoss].bUse)
 		{
 
-			//ˆÚ“®ˆÊ’u’²®
-			if(abs(g_boss[nCntBoss].pos.x - DotPos2Pos(g_boss[nCntBoss].dotPos).x) < VALUE_MOVE && abs(g_boss[nCntBoss].pos.y - DotPos2Pos(g_boss[nCntBoss].dotPos).y) < VALUE_MOVE )
+			//°ÜÆ°°ÌÃÖÄ´À°
+			if(fabs(g_boss[nCntBoss].pos.x - DotPos2Pos(g_boss[nCntBoss].dotPos).x) < VALUE_MOVE && fabs(g_boss[nCntBoss].pos.y - DotPos2Pos(g_boss[nCntBoss].dotPos).y) < VALUE_MOVE )
 			{
 				g_boss[nCntBoss].pos = DotPos2Pos(g_boss[nCntBoss].dotPos);
 				g_boss[nCntBoss].walking = false;
 			}
 			
-			//ŽŸ‚ÌˆÊ’uˆÚ“®‚µ‚½‚ç
+			//¼¡¤Î°ÌÃÖ°ÜÆ°¤·¤¿¤é
 			if(g_boss[nCntBoss].pos == DotPos2Pos(g_boss[nCntBoss].dotPos))
 			{
 				g_boss[nCntBoss].walking = false;
 			}
 
-			//Ž€–S
+			//»àË´
 			if(g_boss[nCntBoss].life == 0)
 			{
 				g_boss[nCntBoss].nCounterDeath = 120; //hurt anime 60s
@@ -300,7 +300,7 @@ void UpdateBoss(void)
 				}
 				if(hurt_flag)
 				{
-					SetColorBoss(nCntBoss, 255, 0, 0, 255); //Ô
+					SetColorBoss(nCntBoss, 255, 0, 0, 255); //ÀÖ
 				}
 				else
 				{
@@ -325,7 +325,7 @@ void UpdateBoss(void)
 				}
 				if(hurt_flag)
 				{
-					SetColorBoss(nCntBoss, 255, 0, 0, 255); //Ô
+					SetColorBoss(nCntBoss, 255, 0, 0, 255); //ÀÖ
 					SetSE(SOUND_LABEL_SE_BOSSHURT);
 				}
 				else
@@ -339,7 +339,7 @@ void UpdateBoss(void)
 				g_boss[nCntBoss].nCounterDeath = -2;
 				g_boss[nCntBoss].bUse = false;
 				hurt_flag = false;
-				SetItem(ITEM_NEXT,g_boss[nCntBoss].dotPos); //NEXT‚ðŒ»‚·
+				SetItem(ITEM_NEXT,g_boss[nCntBoss].dotPos); //NEXT¤ò¸½¤¹
 
 			}
 
@@ -370,10 +370,10 @@ void UpdateBoss(void)
 			}
 			else
 			{
-				//randomˆÚ“® 
+				//random°ÜÆ° 
 				new_dir = (DIRECTION)(rand()%4);
 				
-				// ˆÚ“®
+				// °ÜÆ°
 				if(new_dir == D_UP)
 				{
 					g_boss[nCntBoss].dir = D_UP;
@@ -421,20 +421,20 @@ void UpdateBoss(void)
 			SetVertexBoss(nCntBoss);
 
 
-			//Œü‚«•ÏX
+			//¸þ¤­ÊÑ¹¹
 			SetTextureBoss(nCntBoss, g_boss[nCntBoss].nPatternAnim, g_boss[nCntBoss].dir);
 	
-			//ƒAƒjƒ•\Œ»
+			//¥¢¥Ë¥áÉ½¸½
 			g_boss[nCntBoss].nCounterAnim++;
 			if((g_boss[nCntBoss].nCounterAnim % TIME_CHANGE_PATTERN) == 0)
 			{
-				// ƒpƒ^[ƒ“‚ÌØ‚è‘Ö‚¦
+				// ¥Ñ¥¿¡¼¥ó¤ÎÀÚ¤êÂØ¤¨
 				g_boss[nCntBoss].nPatternAnim = (g_boss[nCntBoss].nPatternAnim + 1) % TEX_PATTERN_DIVIDE_X;
 
-				// ƒeƒNƒXƒ`ƒƒÀ•W‚ðÝ’è
+				// ¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤òÀßÄê
 				SetTextureBoss(nCntBoss, g_boss[nCntBoss].nPatternAnim, g_boss[nCntBoss].dir);
 
-				//nCounterAnim‚ÌƒŠƒZƒbƒg
+				//nCounterAnim¤Î¥ê¥»¥Ã¥È
 				g_boss[nCntBoss].nCounterAnim = 0;
 			}	
 		}
@@ -443,51 +443,51 @@ void UpdateBoss(void)
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetVertexEnemy(void)
-ˆø”:	‚È‚µ
-–ß‚è’l:	‚È‚µ
-à–¾:	’¸“_À•W‚ÌÝ’è
+´Ø¿ôÌ¾:	void SetVertexEnemy(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	ÄºÅÀºÂÉ¸¤ÎÀßÄê
 *******************************************************************************/
 void SetVertexBoss(int nCntBoss)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤ÎÃæ¿È¤òËä¤á¤ë
 		VERTEX_2D *pVtx;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// ÄºÅÀ¥Ç¡¼¥¿¤ÎÈÏ°Ï¤ò¥í¥Ã¥¯¤·¡¢ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤Ø¤Î¥Ý¥¤¥ó¥¿¤ò¼èÆÀ
 		g_pVtxBufferBoss->Lock(0, 0, (void**)&pVtx, 0);
 		
 		pVtx += nCntBoss * NUM_VERTEX; 
 
-		//’¸“_À•W‚ÌÝ’è
+		//ÄºÅÀºÂÉ¸¤ÎÀßÄê
 		pVtx[0].pos = D3DXVECTOR3(g_boss[nCntBoss].pos.x - (POLYGON_SIZE_X/2), g_boss[nCntBoss].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[1].pos = D3DXVECTOR3(g_boss[nCntBoss].pos.x + (POLYGON_SIZE_X/2), g_boss[nCntBoss].pos.y - (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[2].pos = D3DXVECTOR3(g_boss[nCntBoss].pos.x - (POLYGON_SIZE_X/2), g_boss[nCntBoss].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 		pVtx[3].pos = D3DXVECTOR3(g_boss[nCntBoss].pos.x + (POLYGON_SIZE_X/2), g_boss[nCntBoss].pos.y + (POLYGON_SIZE_Y/2), 0.0f);
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// ÄºÅÀ¥Ç¡¼¥¿¤ò¥¢¥ó¥í¥Ã¥¯¤¹¤ë
 		g_pVtxBufferBoss->Unlock();
 	}
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetTextureEnemy(int nPatternAnim)
-ˆø”:	int nPatternAnim : ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ^[ƒ“No.
-–ß‚è’l:	‚È‚µ
-à–¾:	ƒeƒNƒXƒ`ƒƒÀ•W‚ÌÝ’è
+´Ø¿ôÌ¾:	void SetTextureEnemy(int nPatternAnim)
+°ú¿ô:	int nPatternAnim : ¥¢¥Ë¥á¡¼¥·¥ç¥ó¥Ñ¥¿¡¼¥óNo.
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤ÎÀßÄê
 *******************************************************************************/
 void SetTextureBoss(int nCntBoss, int nPatternAnim, DIRECTION dir)
 {
-	{//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	{//ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤ÎÃæ¿È¤òËä¤á¤ë
 		VERTEX_2D *pVtx;
 		float fPosXLeft, fPosXRight;
 		float fPosYUp, fPosYDown;
 
-		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+		// ÄºÅÀ¥Ç¡¼¥¿¤ÎÈÏ°Ï¤ò¥í¥Ã¥¯¤·¡¢ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤Ø¤Î¥Ý¥¤¥ó¥¿¤ò¼èÆÀ
 		g_pVtxBufferBoss->Lock(0, 0, (void**)&pVtx, 0);
 
 		pVtx += nCntBoss * NUM_VERTEX; 
 
-		// ƒeƒNƒXƒ`ƒƒÀ•W‚ÌÝ’è
+		// ¥Æ¥¯¥¹¥Á¥ãºÂÉ¸¤ÎÀßÄê
 		fPosXLeft	= TEX_PATTERN_SIZE_X * (nPatternAnim % TEX_PATTERN_DIVIDE_X);
 		fPosXRight	= TEX_PATTERN_SIZE_X * (nPatternAnim % TEX_PATTERN_DIVIDE_X + 1);
 		fPosYUp		= TEX_PATTERN_SIZE_Y * dir;
@@ -499,16 +499,16 @@ void SetTextureBoss(int nCntBoss, int nPatternAnim, DIRECTION dir)
 		pVtx[2].tex = D3DXVECTOR2( fPosXLeft, fPosYDown );
 		pVtx[3].tex = D3DXVECTOR2( fPosXRight, fPosYDown );
 
-		// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+		// ÄºÅÀ¥Ç¡¼¥¿¤ò¥¢¥ó¥í¥Ã¥¯¤¹¤ë
 		g_pVtxBufferBoss->Unlock();
 	}
 }
 
 /*******************************************************************************
-ŠÖ”–¼:	void SetEnemy(D3DXVECTOR3 pos)
-ˆø”:	D3DXVECTOR3 posF“G‚ðÝ’u‚·‚éˆÊ’u
-–ß‚è’l:	‚È‚µ
-à–¾:	“G‚ÌÝ’u
+´Ø¿ôÌ¾:	void SetEnemy(D3DXVECTOR3 pos)
+°ú¿ô:	D3DXVECTOR3 pos¡§Å¨¤òÀßÃÖ¤¹¤ë°ÌÃÖ
+Ìá¤êÃÍ:	¤Ê¤·
+ÀâÌÀ:	Å¨¤ÎÀßÃÖ
 *******************************************************************************/
 void SetBoss(D3DXVECTOR3 pos)
 {
@@ -516,10 +516,10 @@ void SetBoss(D3DXVECTOR3 pos)
 	{
 		if(!g_boss[nCntBoss].bUse)
 		{
-			//ˆÊ’u‚ðÝ’è
+			//°ÌÃÖ¤òÀßÄê
 			g_boss[nCntBoss].pos = pos;
 			SetVertexBoss(nCntBoss);
-			g_boss[nCntBoss].bUse = true; //”­ŽË’†‚É•ÏX
+			g_boss[nCntBoss].bUse = true; //È¯¼ÍÃæ¤ËÊÑ¹¹
 			break;
 		}
 	}
@@ -528,10 +528,10 @@ void SetBoss(D3DXVECTOR3 pos)
 
 void SetColorBoss(int nCntBoss, int R, int G, int B, int A)
 {
-	//’¸“_ƒoƒbƒtƒ@‚Ì’†g‚ð–„‚ß‚é
+	//ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤ÎÃæ¿È¤òËä¤á¤ë
 	VERTEX_2D *pVtx;
 
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ðƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ðŽæ“¾
+	// ÄºÅÀ¥Ç¡¼¥¿¤ÎÈÏ°Ï¤ò¥í¥Ã¥¯¤·¡¢ÄºÅÀ¥Ð¥Ã¥Õ¥¡¤Ø¤Î¥Ý¥¤¥ó¥¿¤ò¼èÆÀ
 	g_pVtxBufferBoss->Lock(0, 0, (void**)&pVtx, 0);
 
 	pVtx += nCntBoss * NUM_VERTEX; 
@@ -542,7 +542,7 @@ void SetColorBoss(int nCntBoss, int R, int G, int B, int A)
 	pVtx[2].col = D3DCOLOR_RGBA(R,G,B,A);
 	pVtx[3].col = D3DCOLOR_RGBA(R,G,B,A);
 
-	// ’¸“_ƒf[ƒ^‚ðƒAƒ“ƒƒbƒN‚·‚é
+	// ÄºÅÀ¥Ç¡¼¥¿¤ò¥¢¥ó¥í¥Ã¥¯¤¹¤ë
 	g_pVtxBufferBoss->Unlock();
 	
 }
@@ -550,10 +550,10 @@ void SetColorBoss(int nCntBoss, int R, int G, int B, int A)
 
 
 /*******************************************************************************
-ŠÖ”–¼:	BULLET* GetBullet(void)
-ˆø”:	‚È‚µ
-–ß‚è’l: BULLET*FBULLET‚Ìƒ|ƒCƒ“ƒ^
-à–¾:	“–‚½‚è”»’è‚È‚Ç‚ÌŽžA’e‚Ìî•ñ‚ð“Ç‚ÝŽæ‚è
+´Ø¿ôÌ¾:	BULLET* GetBullet(void)
+°ú¿ô:	¤Ê¤·
+Ìá¤êÃÍ: BULLET*¡§BULLET¤Î¥Ý¥¤¥ó¥¿
+ÀâÌÀ:	Åö¤¿¤êÈ½Äê¤Ê¤É¤Î»þ¡¢ÃÆ¤Î¾ðÊó¤òÆÉ¤ß¼è¤ê
 *******************************************************************************/
 BOSS *GetBoss(void)
 {
